@@ -1,0 +1,206 @@
+<!-- Button trigger modal -->
+
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Add Categories
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="">
+          <div class="container d-flex justify-content-center">
+            <div class="row w-75 mt-5">
+              <div class="col-md-12">
+                
+                <form
+                  id="categoryForm"
+                  
+                  
+                 
+                >
+                  <label for="">Category Name</label>
+                  <input type="text" name="category" id="categoryId" onkeyup="validateCategory()" class="form-control" required />
+                  <p style="color: red;" id="error"></p>
+                  <p style="color: red;" id="error1"></p>
+                  <p style="color: rgb(0, 255, 89);" id="success"></p>
+
+                  
+                    
+                    
+                  <button type="button" class="btn btn-primary " onclick=" validateCategory() ? checkDuplicateAndAdd():'';" >Submit</button>
+                </form>
+
+        
+                    <!-- <button type="submit" class="btn btn-primary mt-4">Submit</button> -->
+                 
+                
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary " onclick="checkDuplicate()" >Submit</button>
+      </div> -->
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Table section -->
+<section w-50 mx-auto>
+  <div class="card-body">
+    <div class="row w-50 mt-5 mx-auto">
+      <div class="table-responsive">
+        <div class="table-responsive">
+          <table class="table align-middle table-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="align-middle" scope="col">No.</th>
+                <th class="align-middle" scope="col">Category Name</th>
+                <th class="align-middle" scope="col">Option</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+                <p style="color: red;" id="deleteError" ></p>
+                
+              
+
+              <% viewCategory.forEach(function(viewCategory,index){ %>
+
+              <tr>
+                <td><%= index+1 %></td>
+
+                <td><%= viewCategory.CategoryName %></td>
+                <td>
+                  <a href="/admin/edit-category/<%= viewCategory._id %>" class="btn btn-xs btn-success"> Edit</a>
+                  
+                  
+                  <button type="button" class="btn btn-xs btn-danger" onclick="deleteThecategory('<%= viewCategory._id %>')" >Delete</button>
+                 
+                  
+                  <!-- <a href="/admin/delete-category/<%= viewCategory._id %>" class="btn btn-xs btn-danger"   onclick="return deleteAlert(), event.preventDefault()"> Delete</a> -->
+                </td>
+              </tr>
+              <% })%>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- table-responsive end// -->
+    </div>
+  </div>
+</section>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+<script>
+  function deleteAlert()
+ {
+
+  swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this category!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("category  deleted sucessfully!", {
+      icon: "success",
+    });
+  } else {
+    swal("category not deleted !");
+  }
+});
+  
+} 
+
+
+
+
+function validateCategory(){
+  const CategoryName = document.getElementById('categoryId').value
+  const regex = /^\S+$/;
+ 
+  if (!regex.test(CategoryName)){
+   document.getElementById('error').innerHTML='enter valid categoryname'
+   return false
+  }else{
+    document.getElementById('error').innerHTML=''
+    return true
+  }
+}
+
+function checkDuplicateAndAdd(){
+
+  let value = document.getElementById('categoryId').value
+  console.log("inAjax",value);
+  $.ajax({
+    url:'/admin/add-category',
+    method:'POST',
+    data:$('#categoryForm').serialize(),
+    
+    success: function (exist) {
+      console.log('exist',exist);
+      if(exist){
+        document.getElementById('error1').innerHTML = 'category already exist' 
+        setTimeout(()=>{location.reload()},2000)
+      }else{
+        document.getElementById('success').innerHTML = 'category added' 
+           setTimeout(()=>{location.reload()},2000)
+      }
+    }       
+      
+
+  })
+}
+
+
+  function deleteThecategory(id) {
+
+
+    $.ajax({
+                url: '/admin/delete-category',
+                type: 'GET',
+                data: {
+                    proId: id
+                },
+                success: function (response) {
+                    if (response) {
+
+                        location.reload()
+                    }else{
+                      document.getElementById('deleteError').innerHTML='Products exist!!Try again after deleting them'
+                    }
+                }
+
+              })
+            }
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,83 @@
+
+<script src="/assets/js/validation.js"></script>
+
+
+
+<section class="d-flex justify-content-center mt-5" style="padding-right: 300px; padding-top: 120px;background-color: #f8f9fa;">
+
+    <form action="/admin/login" method="post" class="">
+      <!-- Email input -->
+      <div class="form-outline mb-4">
+        <input type="email" id="emailId" name="email" class="form-control" onkeyup="emailValidate()" />
+        <p style="color: red;" id="emailError"></p>
+        <label class="form-label" for="form2Example1">Email address</label>
+      </div>
+  
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <input type="password" id="passId" name="password" class="form-control"  onkeyup="passwordValidate()"/>
+        <p style="color: red;" id="passError"></p>
+        <label class="form-label" for="form2Example2">Password</label>
+      </div>
+
+      
+      <%if(locals.invalidCredentials){%>
+
+      <p style="color: red;" >invalid Credentials</p>
+      <%}
+      %>
+
+  
+      <!-- 2 column grid layout for inline styling -->
+      <div class="row mb-4">
+        <div class="col d-flex justify-content-center">
+          <!-- Checkbox -->
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="form2Example31"
+              checked
+            />
+            <label class="form-check-label" for="form2Example31">
+              Remember me
+            </label>
+          </div>
+        </div>
+  
+        <!-- <div class="col">
+          Simple link
+          <a href="/reset_password">Forgot aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapassword?</a>
+        </div> -->
+      </div>
+  
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary !important btn-block mb-4">
+        Sign in
+      </button>
+  
+      <!-- Register buttons -->
+      <!-- <div class="text-center">
+       <p>Not a member? <a href="#!">Register</a></p>
+        <p>or sign up with:</p>
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-facebook-f"></i>
+        </button>
+  
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-google"></i>
+        </button>
+  
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-twitter"></i>
+        </button>
+  
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-github"></i>
+        </button> -->
+      <!-- </div> -->
+    </form>
+  </section>
+  
+  

@@ -1,0 +1,305 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Products</h2>
+          <form
+            
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Add product
+  </button>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <section class="">
+          <div class="container d-flex justify-content-center">
+            <div class="row w-75 mt-5">
+              <div class="col-md-12">
+                <h2 class="text-center">Add Product</h2>
+                <form
+                  action="/admin/add-product"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  
+                >
+                  <label for="">Product Name</label>
+                  <input type="text" name="name" class="form-control" required />
+                  <label for="">Description</label>
+                  <input type="text" name="description" class="form-control" required/>
+        
+                  <label for="">Quantity</label>
+                  <input type="text" name="quantity" id="Quantity" onkeyup="validateQuantity()" class="form-control" required/>
+                  <p style="color: red;" id="QuantityError"></p>
+        
+        
+                  <!-- <label for="">Category</label>
+                  <input type="text" name="category" class="form-control" /> -->
+        
+        
+                  <label for="">Price</label>
+                  <input type="text" name="Price" id="Price" onkeyup="validatePrice()" class="form-control" required />
+                  <p style="color: red;" id="PriceError"></p>
+        
+                  <label for="">Offer Price</label>
+                  <input type="text" name="OfferPrice" id="OfferPrice" onkeyup="validateOfferPrice()" class="form-control" required />
+                  <p style="color: red;" id="OfferPriceError"></p>
+        
+                   <label for="">Category</label>
+        
+                   <select class="form-select" name="category" id="cars">
+                    <% availCategory.forEach(function(availCategory,index) { %>
+                    <option value="<%= availCategory.CategoryName%>">
+                      <%= availCategory.CategoryName%>
+                    </option>
+                    <% }) %>
+                  </select>
+                      
+        
+        
+        
+                  <!-- <select class="form-select" name="category" id="cars">
+                    <option value="volvo">Volvo</option>
+                  </select> -->
+                  <!-- <label for="">Brand</label>
+                  <select class="form-select" name="category" id="cars">
+                    <option value="volvo">Volvo</option>
+                  </select> -->
+        
+                  <label for="">Image 1</label>
+                  <div>
+                    <img src=""  width="90px" height="90px" id="displayImg1">
+                  </div>
+                  <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display1(event)"/>
+        
+        
+                  <label for="">Image 2</label>
+                  <div>
+                    <img src=""  width="90px" height="90px" id="displayImg2">
+                  </div>
+                  <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display2(event)"/>
+        
+        
+                  <label for="">Image 3</label>
+                  <div>
+                    <img src=""  width="90px" height="90px" id="displayImg3">
+                  </div>
+                  <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display3(event)"/>
+        
+        
+                  <label for="">Image 4</label>
+                  <div>
+                    <img src=""  width="90px" height="90px" id="displayImg4">
+                  </div>
+                  <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display4(event)"/>
+        
+                  <button type="submit" class="btn btn-success mt-4" onclick="return totalValidation()">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+
+
+
+
+
+
+
+
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary " onclick="checkDuplicate()" >Submit</button>
+      </div> -->
+    
+    </div>
+  </div>
+</div>
+
+  <!-- Table section -->
+  <section  mx-auto>
+    <div class="card-body">
+      <div class="row mt-5 mx-auto">
+        <div class="table-responsive">
+          <div class="table-responsive">
+            <table class="table align-middle table-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle" scope="col">No:</th>
+                  <th class="align-middle" scope="col">Image</th>
+                  <th class="align-middle" scope="col">Product Name</th>
+                  <th class="align-middle" scope="col">Category</th>
+                  <th class="align-middle" scope="col">Price</th>
+                  <!-- <th class="align-middle" scope="col">Category</th> -->
+                  <th class="align-middle" scope="col">Quantity</th>
+                 
+                  <th class="align-middle" scope="col">Option</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% response.forEach(function(response,index) { %>
+                <tr>
+                  <td><%=index+1 %> </td>
+                  <td><img src='/uploads/<%= response.Image[0] %>' alt="" style="width:50px;height:50px";></td>
+                  <td>
+                    <p><%=response.Productname%></p>
+                    <small><%=response.ProductDescription%></small>
+
+                  </td> 
+                  <td><%=response.category%></td> 
+                  <td><%=response.Price%></td> 
+                  <!-- <td><%=response.category%></td>  -->
+                  <td><%=response.Quantity%></td> 
+                
+                  
+                  <td>
+                    <a href ="/admin/view-product-Details/<%=response._id %>"  class="btn btn-primary">view</a>
+
+                        <a href ="/admin/edit-product/<%=response._id %>"  class="btn btn-primary">Edit</a>
+                 
+                        <a href ="/admin/delete-product/<%=response._id %>" class="btn btn-danger" onclick="deleteAlert()">Delete</a>
+                  </td>
+    
+                 
+                </tr>
+          <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- table-responsive end// -->
+      </div>
+    </div>
+  </section>
+  
+  <div class="pagination-area mt-15 mb-50">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+            <!-- <li class="page-item active"><a class="page-link" href="#">01</a></li> -->
+            <% for(let i = 1; i <= pages ; i++) { %>
+            <li class="page-item"><a class="page-link" href="?page=<%= i %>" id="pagination"><%= i %></a></li>
+            <!-- <li class="page-item"><a class="page-link" href="#">03</a></li>
+            <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+            <li class="page-item"><a class="page-link" href="#">16</a></li>
+            <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li> -->
+            <% } %>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+
+
+
+
+
+  <script>
+    function display1(event){
+      document.getElementById('displayImg1').src= URL.createObjectURL(event.target.files[0])
+      
+    }
+    function display2(event){
+      document.getElementById('displayImg2').src= URL.createObjectURL(event.target.files[0])
+      
+    }
+    function display3(event){
+      document.getElementById('displayImg3').src= URL.createObjectURL(event.target.files[0])
+      
+    }
+    function display4(event){
+      document.getElementById('displayImg4').src= URL.createObjectURL(event.target.files[0])
+      
+    }
+  
+  
+    function validateQuantity(){
+      
+      let  quant = document.getElementById('Quantity').value;
+      console.log(quant);
+  
+      let quantRegx= /^\d+$/;
+     
+      if (!quantRegx.test(quant))
+   
+      {
+        document.getElementById('QuantityError').innerHTML= 'invalid quantity'
+        return false
+      }else{
+        document.getElementById('QuantityError').innerHTML= ''
+        return true
+      }
+  
+    }
+  
+    function validatePrice(){
+      
+      let  quant = document.getElementById('Price').value;
+      console.log(quant);
+  
+      let quantRegx= /^\d+$/;
+      
+      if (!quantRegx.test(quant))
+   
+      {
+        document.getElementById('PriceError').innerHTML= 'invalid Price'
+        return false
+      }else{
+        document.getElementById('PriceError').innerHTML = ''
+        return true
+      }
+  
+    }
+  
+    function validateOfferPrice(){
+      
+      let  quant = document.getElementById('OfferPrice').value;
+      console.log(quant);
+  
+      let quantRegx= /^\d+$/;
+      if (!quantRegx.test(quant))
+   
+      {
+        document.getElementById('OfferPriceError').innerHTML= 'invalid OfferPrice'
+        return false
+      }else{
+        document.getElementById('OfferPriceError').innerHTML= ''
+        return true
+      }
+  
+    }
+    function totalValidation(){
+      if (validateQuantity()&&validatePrice()&&validateOfferPrice()){
+        return true
+      }else {
+        return false
+      }
+    }
+    
+  </script>
+

@@ -1,0 +1,154 @@
+
+
+
+
+
+<% if (response.length==0) { %>
+    <!-- content to render if condition is true -->
+    <h1>wishlist is empty</h1>
+  <% } else { %>
+    <!-- content to render if condition is false -->
+
+
+   
+    
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html" rel="nofollow">Home</a>
+                    <span></span> Shop
+                    <span></span> Wishlist
+                </div>
+            </div>
+        </div>
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col" colspan="2">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock Status</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% response.forEach(function(response) { %>
+                                    <tr>
+                                        <td class="image product-thumbnail"><img src="/uploads/<%= response.Image[0] %>" alt="#"></td>
+                                        <td class="product-des product-name">
+                                            <h5 class="product-name"><a href="/shop-product/<%=response.proId%>"><%=response.Productname%></a></h5>
+                                            <p class="font-xs"><%=response.ProductDescription%>
+                                            </p>
+                                        </td>
+                                        <td class="price" data-title="Price">₹<span id="productPrice"><%=response.Price%></span></td>
+                                        <td class="text-center" data-title="Stock">
+                                            <span class="color3 font-weight-bold">In Stock</span>
+                                        </td>
+                                        <td class="text-right" data-title="Cart">
+                                            <button class="btn btn-sm" onclick="addToCartWishlist('<%=response.proId%>','<%=response.Price%>')"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                        </td>
+                                        <td class="action" data-title="Remove"><button onclick="deleteWishlist('<%=response.proId%>')"><i class="fi-rs-trash"></i></button></td>
+                                    </tr>
+                                    
+                                    
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+  <% } %>
+  
+
+
+
+
+
+
+
+
+
+
+<script>
+    function addToCartWishlist(id,productPrice){
+        let quantity = 1
+       let price = productPrice
+       console.log('priceeee',price);
+        
+        $.ajax({
+                url: '/add-cart-wishlist',
+                type: 'POST',
+                data: {
+                    proId:id,
+                    quantity:quantity,
+                    price:price
+                   
+                },
+                success: function (response) {
+
+                   if(response){
+                    swal({
+                        title: "added to cart!",
+                        
+                        type: "success"
+                        }).then(function() {
+                            location.reload();
+                        });
+                       
+                
+                   }
+
+                }
+            })
+    }
+
+function deleteWishlist(id){
+    swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover the product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/delete-wishlist',
+                        type: 'GET',
+                        data: {
+                            proId: id
+                        },
+                        success: function (response) {
+                            if (response) {
+
+                                location.reload()
+                            }
+                        }
+                    })
+                    swal("Your product is removed from wishlist", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Canceled");
+                }
+            });
+}
+
+
+    
+
+
+
+
+
+</script>
