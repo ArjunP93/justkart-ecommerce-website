@@ -149,10 +149,11 @@ module.exports = {
 
   postSignup: (req, res) => {
     userhelpers.doSignUp(req.body).then((response) => {
-      console.log(response);
       var emailStatus = response.status;
+      loginStatus = response.status;
       if (emailStatus) {
-        req.session.user = response.user;
+        req.session.user = response.data;
+
         req.session.userIn = true;
 
         res.redirect("/");
@@ -493,7 +494,7 @@ module.exports = {
 
           userhelpers.checkWalletBalance(userid).then((result) => {
             console.log("balance", result);
-            let walletbalance = result ==null  ? 0 : result.balance;
+            let walletbalance = result == null ? 0 : result.balance;
             if (result == null) {
               response.wallet = false;
               res.json(response);
