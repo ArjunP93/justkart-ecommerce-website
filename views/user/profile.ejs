@@ -327,7 +327,7 @@
                                         <div class="card">
                                             <div class="card-header">
                                                 <h5 class="mb-0">WALLET<br>
-                                                    <span>Balance:<%=walletResponse.balance.toLocaleString('en-IN', {
+                                                    <span>Balance:<%=walletResponse?.balance.toLocaleString('en-IN', {
                                                             style: 'currency' , currency: 'INR' })%></span>
                                                 </h5>
                                             </div>
@@ -346,7 +346,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% walletResponse.transactions.forEach((transactions)=> { %>
+                                                            <% walletResponse?.transactions.forEach((transactions)=> { %>
                                                                 <% const timestamp=new Date(transactions.createdAt);
                                                                     const options={ month: 'long' , day: 'numeric' ,
                                                                     year: 'numeric' , hour: 'numeric' ,
@@ -363,7 +363,7 @@
                                                                         <td>
                                                                             <%=transactions.type%>
                                                                         </td>
-                                                                        <td><%=transactions.amount.toLocaleString('en-IN',
+                                                                        <td><%=transactions?.amount.toLocaleString('en-IN',
                                                                                 { style: 'currency' , currency: 'INR'
                                                                                 })%></td>
 
