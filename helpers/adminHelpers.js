@@ -88,12 +88,12 @@ module.exports = {
         return date.toLocaleString("default", { month: "long" });
       }
 
-      response.ordercount = ordercount==null ? undefined : ordercount;
-      response.productsCount = productsCount==null ? undefined : productsCount;
-      response.catagoryCount = catagoryCount==null ? undefined : catagoryCount;
-      response.revenue = revenue==null ? undefined : revenue;
-      response.dataForGraph_Sales = dataForGraph_Sales==null ? undefined : dataForGraph_Sales;
-      response.paymentcounts = paymentcounts==null ? undefined : paymentcounts;
+      response.ordercount = ordercount==null ? 0 : ordercount;
+      response.productsCount = productsCount==null ? 0 : productsCount;
+      response.catagoryCount = catagoryCount==null ? 0 : catagoryCount;
+      response.revenue = revenue==null ? 0 : revenue;
+      response.dataForGraph_Sales = dataForGraph_Sales==null ? 0 : dataForGraph_Sales;
+      response.paymentcounts = paymentcounts==null ? 0 : paymentcounts;
       response.monthlyEarnings = monthlyEarnings?.pop();
 
       return response;
