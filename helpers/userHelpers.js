@@ -446,8 +446,7 @@ module.exports = {
       };
       return new Promise(async (resolve, reject) => {
         let walletDetails = await walletSchema.wallet.findOne({ userId: uId });
-        let currentBalance = walletDetails.balance;
-        let newBalance = currentBalance + refund;
+       
 
         if (walletDetails == null) {
           const walletItem = new walletSchema.wallet({
@@ -457,6 +456,8 @@ module.exports = {
           });
           await walletItem.save();
         } else {
+          let currentBalance = walletDetails.balance;
+          let newBalance = currentBalance + refund;
           await walletSchema.wallet.updateOne(
             { userId: objectId(uId) },
             {
