@@ -493,7 +493,7 @@ module.exports = {
 
           userhelpers.checkWalletBalance(userid).then((result) => {
             console.log("balance", result);
-            let walletbalance = result?.balance;
+            let walletbalance = result ==null  ? 0 : result.balance;
             if (result == null) {
               response.wallet = false;
               res.json(response);

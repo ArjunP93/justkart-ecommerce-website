@@ -9,6 +9,7 @@
         </div>
 
         <% if(locals.address.Address.length==0) {%>
+          <input type="text" id="noAddress" style="display: none;" value="0">
           <h2>No Addrerss added</h2>
           <%} %>
 
@@ -297,47 +298,48 @@
 
   function checkoutAjax() {
 
-    console.log('hello ajax');
+    let address_exist = document.getElementById('noAddress').value
+    if (address_exist == '0') {
 
+      swal("Add address!", "add shipping address and continue!", "warning").then(function () {
+        location.reload();
+      });
 
-
-    $.ajax({
-      url: '/checkout',
-      type: 'POST',
-      data: $('#checkout-form').serialize(),
-      success: function (response) {
-        if (response.COD) {
-          swal("Order placed!", "You clicked the button!", "success").then(function () {
-            location.href = '/order-details';
-          });
-        }
-        else if (response.wallet) {
-          if (response.balanceError) {
-            swal("insufficient balance!", "please try another payment method!", "warning").then(function () {
-              location.reload()
-            })
-          } else {
-            swal("Order placed!", "Amount debited from wallet!", "success").then(function () {
+    } else {
+      $.ajax({
+        url: '/checkout',
+        type: 'POST',
+        data: $('#checkout-form').serialize(),
+        success: function (response) {
+          if (response.COD) {
+            swal("Order placed!", "You clicked the button!", "success").then(function () {
               location.href = '/order-details';
             });
           }
-        } else if (response.razorpay) {
-          getRazorpay(response)
+          else if (response.wallet) {
+            if (response.balanceError) {
+              swal("insufficient balance!", "please try another payment method!", "warning").then(function () {
+                location.reload()
+              })
+            } else {
+              swal("Order placed!", "Amount debited from wallet!", "success").then(function () {
+                location.href = '/order-details';
+              });
+            }
+          } else if (response.razorpay) {
+            getRazorpay(response)
+          }
+          else if (!response.wallet) {
+            swal("wallet not found!", "create wallet from profile!", "warning")
+          }
+
+
+        },
+        error: function (xhr, status, error) {
+          console.log("AJAX error:", error);
         }
-        else if (!response.wallet) {
-          swal("wallet not found!", "create wallet from profile!", "warning")
-        }
-
-
-
-
-      },
-      error: function (xhr, status, error) {
-        console.log("AJAX error:", error);
-      }
-    });
-
-
+      });
+    }
 
 
 
@@ -378,14 +380,6 @@
       }
     });
   }
-
-
-
-
-
-
-
-
 
 
 
