@@ -91,7 +91,7 @@ module.exports = {
       response.ordercount = ordercount==null ? 0 : ordercount;
       response.productsCount = productsCount==null ? 0 : productsCount;
       response.catagoryCount = catagoryCount==null ? 0 : catagoryCount;
-      response.revenue = revenue==null ? 0 : revenue;
+      response.revenue = revenue==null ? 0 : revenue[0].totalRevenue;
       response.dataForGraph_Sales = dataForGraph_Sales==null ? 0 : dataForGraph_Sales;
       response.paymentcounts = paymentcounts==null ? 0 : paymentcounts;
       response.monthlyEarnings = monthlyEarnings?.pop();
