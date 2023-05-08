@@ -1,319 +1,104 @@
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
-  <section class="content-main">
-    <div class="content-header">
-      <div>
-        <h2 class="content-title card-title">Dashboard</h2>
-        <p>Welcome Admin</p>
-      </div>
-      <div>
-        <a href="/admin/sales-report" class="btn btn-primary"
-          ><i class="text-muted material-icons md-post_add"></i>Create report</a
-        >
+
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+
+
+
+
+
+<section class="content-main">
+  <div class="content-header">
+    <div>
+      <h2 class="content-title card-title">Dashboard</h2>
+      <p>Welcome Admin</p>
+    </div>
+    <div>
+      <a href="/admin/sales-report" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create
+        report</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card card-body mb-4">
+        <article class="icontext">
+          <span class="icon icon-sm rounded-circle bg-primary-light"><i
+              class="text-primary material-icons md-monetization_on"></i></span>
+          <div class="text">
+            <h6 class="mb-1 card-title">Revenue</h6>
+            <span><%=saleData.revenue[0].totalRevenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR'
+                })%></span>
+            <span class="text-sm"> Shipping fees are not included </span>
+          </div>
+        </article>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="card card-body mb-4">
-          <article class="icontext">
-            <span class="icon icon-sm rounded-circle bg-primary-light"
-              ><i class="text-primary material-icons md-monetization_on"></i
-            ></span>
-            <div class="text">
-              <h6 class="mb-1 card-title">Revenue</h6>
-              <span>$13,456.5</span>
-              <span class="text-sm"> Shipping fees are not included </span>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card card-body mb-4">
-          <article class="icontext">
-            <span class="icon icon-sm rounded-circle bg-success-light"
-              ><i class="text-success material-icons md-local_shipping"></i
-            ></span>
-            <div class="text">
-              <h6 class="mb-1 card-title">Orders</h6>
-              <span>53.668</span>
-              <span class="text-sm"> Excluding orders in transit </span>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card card-body mb-4">
-          <article class="icontext">
-            <span class="icon icon-sm rounded-circle bg-warning-light"
-              ><i class="text-warning material-icons md-qr_code"></i
-            ></span>
-            <div class="text">
-              <h6 class="mb-1 card-title">Products</h6>
-              <span>9.856</span>
-              <span class="text-sm"> In 19 Categories </span>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card card-body mb-4">
-          <article class="icontext">
-            <span class="icon icon-sm rounded-circle bg-info-light"
-              ><i class="text-info material-icons md-shopping_basket"></i
-            ></span>
-            <div class="text">
-              <h6 class="mb-1 card-title">Monthly Earning</h6>
-              <span>$6,982</span>
-              <span class="text-sm"> Based in your local time. </span>
-            </div>
-          </article>
-        </div>
+    <div class="col-lg-3">
+      <div class="card card-body mb-4">
+        <article class="icontext">
+          <span class="icon icon-sm rounded-circle bg-success-light"><i
+              class="text-success material-icons md-local_shipping"></i></span>
+          <div class="text">
+            <h6 class="mb-1 card-title">Orders</h6>
+            <span>
+              <%=saleData.ordercount%>
+            </span>
+            <span class="text-sm"> Excluding orders in transit </span>
+          </div>
+        </article>
       </div>
     </div>
-    <div class="row">
-      <div class="col-xl-8 col-lg-12">
-        <div class="card mb-4">
-          <article class="card-body">
-            <h5 class="card-title">Sale statistics</h5>
-            <canvas id="myChart" height="120px"></canvas>
-          </article>
-        </div>
-
-
-
-
-        <!-- <div class="row">
-          <div class="col-lg-5">
-            <div class="card mb-4">
-              <article class="card-body">
-                <h5 class="card-title">New Members</h5>
-                <div class="new-member-list">
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-4"
-                  >
-                    <div class="d-flex align-items-center">
-                      <img
-                        src="assets/imgs/people/avatar4.jpg"
-                        alt=""
-                        class="avatar"
-                      />
-                      <div>
-                        <h6>Patric Adams</h6>
-                        <p class="text-muted font-xs">Sanfrancisco</p>
-                      </div>
-                    </div>
-                    <a href="#" class="btn btn-xs"
-                      ><i class="material-icons md-add"></i> Add</a
-                    >
-                  </div>
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-4"
-                  >
-                    <div class="d-flex align-items-center">
-                      <img
-                        src="assets/imgs/people/avatar2.jpg"
-                        alt=""
-                        class="avatar"
-                      />
-                      <div>
-                        <h6>Dilan Specter</h6>
-                        <p class="text-muted font-xs">Sanfrancisco</p>
-                      </div>
-                    </div>
-                    <a href="#" class="btn btn-xs"
-                      ><i class="material-icons md-add"></i> Add</a
-                    >
-                  </div>
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-4"
-                  >
-                    <div class="d-flex align-items-center">
-                      <img
-                        src="assets/imgs/people/avatar3.jpg"
-                        alt=""
-                        class="avatar"
-                      />
-                      <div>
-                        <h6>Tomas Baker</h6>
-                        <p class="text-muted font-xs">Sanfrancisco</p>
-                      </div>
-                    </div>
-                    <a href="#" class="btn btn-xs"
-                      ><i class="material-icons md-add"></i> Add</a
-                    >
-                  </div>
-                </div>
-              </article>
-            </div>
+    <div class="col-lg-3">
+      <div class="card card-body mb-4">
+        <article class="icontext">
+          <span class="icon icon-sm rounded-circle bg-warning-light"><i
+              class="text-warning material-icons md-qr_code"></i></span>
+          <div class="text">
+            <h6 class="mb-1 card-title">Products</h6>
+            <span>
+              <%=saleData.productsCount%>
+            </span>
+            <span class="text-sm"> In <%=saleData.catagoryCount%> Categories </span>
           </div>
-          <div class="col-lg-7">
-            <div class="card mb-4">
-              <article class="card-body">
-                <h5 class="card-title">Recent activities</h5>
-                <ul class="verti-timeline list-unstyled font-sm">
-                  <li class="event-list">
-                    <div class="event-timeline-dot">
-                      <i
-                        class="material-icons md-play_circle_outline font-xxl"
-                      ></i>
-                    </div>
-                    <div class="media">
-                      <div class="me-3">
-                        <h6>
-                          <span>Today</span>
-                          <i
-                            class="material-icons md-trending_flat text-brand ml-15 d-inline-block"
-                          ></i>
-                        </h6>
-                      </div>
-                      <div class="media-body">
-                        <div>Lorem ipsum dolor sit amet consectetur</div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="event-list active">
-                    <div class="event-timeline-dot">
-                      <i
-                        class="material-icons md-play_circle_outline font-xxl animation-fade-right"
-                      ></i>
-                    </div>
-                    <div class="media">
-                      <div class="me-3">
-                        <h6>
-                          <span>17 May</span>
-                          <i
-                            class="material-icons md-trending_flat text-brand ml-15 d-inline-block"
-                          ></i>
-                        </h6>
-                      </div>
-                      <div class="media-body">
-                        <div>
-                          Debitis nesciunt voluptatum dicta reprehenderit
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="event-list">
-                    <div class="event-timeline-dot">
-                      <i
-                        class="material-icons md-play_circle_outline font-xxl"
-                      ></i>
-                    </div>
-                    <div class="media">
-                      <div class="me-3">
-                        <h6>
-                          <span>13 May</span>
-                          <i
-                            class="material-icons md-trending_flat text-brand ml-15 d-inline-block"
-                          ></i>
-                        </h6>
-                      </div>
-                      <div class="media-body">
-                        <div>Accusamus voluptatibus voluptas.</div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="event-list">
-                    <div class="event-timeline-dot">
-                      <i
-                        class="material-icons md-play_circle_outline font-xxl"
-                      ></i>
-                    </div>
-                    <div class="media">
-                      <div class="me-3">
-                        <h6>
-                          <span>05 April</span>
-                          <i
-                            class="material-icons md-trending_flat text-brand ml-15 d-inline-block"
-                          ></i>
-                        </h6>
-                      </div>
-                      <div class="media-body">
-                        <div>
-                          At vero eos et accusamus et iusto odio dignissi
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="event-list">
-                    <div class="event-timeline-dot">
-                      <i
-                        class="material-icons md-play_circle_outline font-xxl"
-                      ></i>
-                    </div>
-                    <div class="media">
-                      <div class="me-3">
-                        <h6>
-                          <span>26 Mar</span>
-                          <i
-                            class="material-icons md-trending_flat text-brand ml-15 d-inline-block"
-                          ></i>
-                        </h6>
-                      </div>
-                      <div class="media-body">
-                        <div>Responded to need “Volunteer Activities</div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-
-
-
-
-      <!-- <div class="col-xl-4 col-lg-12">
-        <div class="card mb-4">
-          <article class="card-body">
-            <h5 class="card-title">Revenue Base on Area</h5>
-            <canvas id="myChart2" height="217"></canvas>
-          </article>
-        </div>
-        <div class="card mb-4">
-          <article class="card-body">
-            <h5 class="card-title">Marketing Chanel</h5>
-            <span class="text-muted font-xs">Facebook</span>
-            <div class="progress mb-3">
-              <div class="progress-bar" role="progressbar" style="width: 15%">
-                15%
-              </div>
-            </div>
-            <span class="text-muted font-xs">Instagram</span>
-            <div class="progress mb-3">
-              <div class="progress-bar" role="progressbar" style="width: 65%">
-                65%
-              </div>
-            </div>
-            <span class="text-muted font-xs">Google</span>
-            <div class="progress mb-3">
-              <div class="progress-bar" role="progressbar" style="width: 51%">
-                51%
-              </div>
-            </div>
-            <span class="text-muted font-xs">Twitter</span>
-            <div class="progress mb-3">
-              <div class="progress-bar" role="progressbar" style="width: 80%">
-                80%
-              </div>
-            </div>
-            <span class="text-muted font-xs">Other</span>
-            <div class="progress mb-3">
-              <div class="progress-bar" role="progressbar" style="width: 80%">
-                80%
-              </div>
-            </div>
-          </article>
-        </div>
+        </article>
       </div>
-    </div> -->
+    </div>
+    <div class="col-lg-3">
+      <div class="card card-body mb-4">
+        <article class="icontext">
+          <span class="icon icon-sm rounded-circle bg-info-light"><i
+              class="text-info material-icons md-shopping_basket"></i></span>
+          <div class="text">
+            <h6 class="mb-1 card-title">Monthly Earning</h6>
+            <span><%=saleData.monthlyEarnings.totalRevenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR'
+                })%></span>
+            <span class="text-sm"> Based in your local time. </span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="chartdiv1"></div>
+  <div id="chartdiv"></div>
 
 
 
 
-    <!-- <div class="card mb-4">
+
+
+
+
+
+  <!-- <div class="card mb-4">
       <header class="card-header">
         <h4 class="card-title">Latest orders</h4>
         <div class="row align-items-center">
@@ -328,6 +113,8 @@
                 <option>Consumer Electronics</option>
                 <option>Jewelry & Accessories</option>
                 <option>Home & Garden</option>
+
+
                 <option>Luggage & Bags</option>
                 <option>Shoes</option>
                 <option>Mother & Kids</option>
@@ -581,13 +368,13 @@
             </table>
           </div>
         </div> -->
-        <!-- table-responsive end// -->
-      <!-- </div>
+  <!-- table-responsive end// -->
+  <!-- </div>
     </div> -->
 
 
 
-    <!-- <div class="pagination-area mt-30 mb-50">
+  <!-- <div class="pagination-area mt-30 mb-50">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
           <li class="page-item active"><a class="page-link" href="#">01</a></li>
@@ -605,19 +392,483 @@
     </div> -->
 
 
-  </section>
-  <!-- content-main end// -->
-  <footer class="main-footer font-xs">
-    <div class="row pb-30 pt-15">
-      <div class="col-sm-6">
-        <script>
-          document.write(new Date().getFullYear());
-        </script>
-        ©, JustKart
-      </div>
-      <div class="col-sm-6">
-        <div class="text-sm-end">All rights reserved</div>
-      </div>
+</section>
+<!-- content-main end// -->
+<footer class="main-footer font-xs">
+  <div class="row pb-30 pt-15">
+    <div class="col-sm-6">
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      ©, JustKart
     </div>
-  </footer>
+    <div class="col-sm-6">
+      <div class="text-sm-end">All rights reserved</div>
+    </div>
+  </div>
+</footer>
 
+
+
+<!-- Styles -->
+<style>
+  #chartdiv {
+    width: 100%;
+    height: 450px;
+  }
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+
+<!-- //donut chart -->
+
+<!-- Styles -->
+<style>
+  #chartdiv1 {
+    width: 100%;
+    height: 300px;
+  }
+</style>
+
+
+<!-- Chart code -->
+<script>
+  am5.ready(function () {
+
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("chartdiv1");
+
+    // Create custom theme
+    // https://www.amcharts.com/docs/v5/concepts/themes/#Quick_custom_theme
+    var myTheme = am5.Theme.new(root);
+    myTheme.rule("Label").set("fontSize", "0.8em");
+
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([
+      am5themes_Animated.new(root),
+      myTheme
+    ]);
+
+    // Create wrapper container
+    var container = root.container.children.push(am5.Container.new(root, {
+      width: am5.p100,
+      height: am5.p100,
+      layout: root.horizontalLayout
+    }));
+
+    // Create first chart
+    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+    var chart0 = container.children.push(am5percent.PieChart.new(root, {
+      innerRadius: am5.p50,
+      tooltip: am5.Tooltip.new(root, {})
+    }));
+
+    // Create series
+    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+    var series0 = chart0.series.push(am5percent.PieSeries.new(root, {
+      valueField: "value",
+      categoryField: "category",
+      alignLabels: false
+    }));
+
+    series0.labels.template.setAll({
+      textType: "circular",
+      templateField: "dummyLabelSettings"
+    });
+
+    series0.ticks.template.set("forceHidden", true);
+
+    var sliceTemplate0 = series0.slices.template;
+    sliceTemplate0.setAll({
+      draggable: true,
+      templateField: "settings",
+      cornerRadius: 5
+    });
+
+    // Separator line
+    container.children.push(am5.Line.new(root, {
+      layer: 1,
+      height: am5.percent(60),
+      y: am5.p50,
+      centerY: am5.p50,
+      strokeDasharray: [4, 4],
+      stroke: root.interfaceColors.get("alternativeBackground"),
+      strokeOpacity: 0.5
+    }));
+
+    // Label
+    container.children.push(am5.Label.new(root, {
+      layer: 1,
+      text: "Drag slices over the line",
+      y: am5.p50,
+      textAlign: "center",
+      rotation: -90,
+      isMeasured: false
+    }));
+
+    // Create second chart
+    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+    var chart1 = container.children.push(am5percent.PieChart.new(root, {
+      innerRadius: am5.p50,
+      tooltip: am5.Tooltip.new(root, {})
+    }));
+
+    // Create series
+    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+    var series1 = chart1.series.push(am5percent.PieSeries.new(root, {
+      valueField: "value",
+      categoryField: "category",
+      alignLabels: false
+    }));
+
+    series1.labels.template.setAll({
+      textType: "circular",
+      radius: 20,
+      templateField: "dummyLabelSettings"
+    });
+
+    series1.ticks.template.set("forceHidden", true);
+
+    var sliceTemplate1 = series1.slices.template;
+    sliceTemplate1.setAll({
+      draggable: true,
+      templateField: "settings",
+      cornerRadius: 5
+    });
+
+    var previousDownSlice;
+
+    // change layers when down
+    sliceTemplate0.events.on("pointerdown", function (e) {
+      if (previousDownSlice) {
+        //  previousDownSlice.set("layer", 0);
+      }
+      e.target.set("layer", 1);
+      previousDownSlice = e.target;
+    });
+
+    sliceTemplate1.events.on("pointerdown", function (e) {
+      if (previousDownSlice) {
+        // previousDownSlice.set("layer", 0);
+      }
+      e.target.set("layer", 1);
+      previousDownSlice = e.target;
+    });
+
+    // when released, do all the magic
+    sliceTemplate0.events.on("pointerup", function (e) {
+      series0.hideTooltip();
+      series1.hideTooltip();
+
+      var slice = e.target;
+      if (slice.x() > container.width() / 4) {
+        var index = series0.slices.indexOf(slice);
+        slice.dataItem.hide();
+
+        var series1DataItem = series1.dataItems[index];
+        series1DataItem.show();
+        series1DataItem.get("slice").setAll({ x: 0, y: 0 });
+
+        handleDummy(series0);
+        handleDummy(series1);
+      } else {
+        slice.animate({
+          key: "x",
+          to: 0,
+          duration: 500,
+          easing: am5.ease.out(am5.ease.cubic)
+        });
+        slice.animate({
+          key: "y",
+          to: 0,
+          duration: 500,
+          easing: am5.ease.out(am5.ease.cubic)
+        });
+      }
+    });
+
+    sliceTemplate1.events.on("pointerup", function (e) {
+      var slice = e.target;
+
+      series0.hideTooltip();
+      series1.hideTooltip();
+
+      if (slice.x() < container.width() / 4) {
+        var index = series1.slices.indexOf(slice);
+        slice.dataItem.hide();
+
+        var series0DataItem = series0.dataItems[index];
+        series0DataItem.show();
+        series0DataItem.get("slice").setAll({ x: 0, y: 0 });
+
+        handleDummy(series0);
+        handleDummy(series1);
+      } else {
+        slice.animate({
+          key: "x",
+          to: 0,
+          duration: 500,
+          easing: am5.ease.out(am5.ease.cubic)
+        });
+        slice.animate({
+          key: "y",
+          to: 0,
+          duration: 500,
+          easing: am5.ease.out(am5.ease.cubic)
+        });
+      }
+    });
+
+    // data
+    var data = [
+      {
+        category: "Dummy",
+        value: 1000,
+        settings: {
+          fill: am5.color(0xdadada),
+          stroke: am5.color(0xdadada),
+          fillOpacity: 0.3,
+          strokeDasharray: [4, 4],
+          tooltipText: null,
+          draggable: false
+        },
+        dummyLabelSettings: {
+          forceHidden: true
+        }
+      },
+      {
+        category: "Online",
+        value: <%=saleData.paymentcounts[0].count %>
+    },
+      {
+        category: "Wallet",
+        value: <%=saleData.paymentcounts[1].count %>
+    },
+      {
+        category: "COD",
+        value: <%=saleData.paymentcounts[2].count %>
+    }
+    ];
+
+    // show/hide dummy slice depending if there are other visible slices
+    function handleDummy(series) {
+      // count visible data items
+      var visibleCount = 0;
+      am5.array.each(series.dataItems, function (dataItem) {
+        if (!dataItem.isHidden()) {
+          visibleCount++;
+        }
+      });
+      // if all hidden, show dummy
+      if (visibleCount == 0) {
+        series.dataItems[0].show();
+      } else {
+        series.dataItems[0].hide();
+      }
+    }
+    // set data
+    series0.data.setAll(data);
+    series1.data.setAll(data);
+
+    // hide all except dummy
+    am5.array.each(series1.dataItems, function (dataItem) {
+      if (dataItem.get("category") != "Dummy") {
+        dataItem.hide(0);
+      }
+    });
+
+    // hide dummy
+    series0.dataItems[0].hide(0);
+
+    // reveal container
+    container.appear(1000, 100);
+
+  }); // end am5.ready()
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- { value: <%=saleData.paymentcounts[0].count%>, category:"Online" },
+    { value: <%=saleData.paymentcounts[1].count%>, category:"Wallet" },
+    { value: <%=saleData.paymentcounts[2].count%>, category:"COD" },
+     -->
+
+       </script>
+
+
+
+
+
+<!-- Chart code -->
+<script>
+  am5.ready(function () {
+
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("chartdiv");
+
+
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([
+      am5themes_Animated.new(root)
+    ]);
+
+
+    // Create chart
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+    var chart = root.container.children.push(am5xy.XYChart.new(root, {
+      panX: true,
+      panY: true,
+      wheelX: "panX",
+      wheelY: "zoomX",
+      pinchZoomX: true
+    }));
+
+    // Add cursor
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+    var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
+    cursor.lineY.set("visible", false);
+
+
+    // Create axes
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+    var xRenderer = am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+    xRenderer.labels.template.setAll({
+      rotation: -90,
+      centerY: am5.p50,
+      centerX: am5.p100,
+      paddingRight: 15
+    });
+
+    xRenderer.grid.template.setAll({
+      location: 1
+    })
+
+    var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+      maxDeviation: 0.3,
+      categoryField: "month",
+      renderer: xRenderer,
+      tooltip: am5.Tooltip.new(root, {})
+    }));
+
+    var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+      maxDeviation: 0.3,
+      renderer: am5xy.AxisRendererY.new(root, {
+        strokeOpacity: 0.1
+      })
+    }));
+
+
+    // Create series
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+      name: "Series 1",
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value",
+      sequencedInterpolation: true,
+      categoryXField: "month",
+      tooltip: am5.Tooltip.new(root, {
+        labelText: "{valueY}"
+      })
+    }));
+
+    series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0 });
+    series.columns.template.adapters.add("fill", function (fill, target) {
+      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    });
+
+    series.columns.template.adapters.add("stroke", function (stroke, target) {
+      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    });
+
+    // Set data
+
+    var data = [
+      {
+        month: '<%=saleData.dataForGraph_Sales[0].month%>',
+        value: <%=saleData.dataForGraph_Sales[0].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[1].month%>',
+        value: <%=saleData.dataForGraph_Sales[1].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[2].month%>',
+        value: <%=saleData.dataForGraph_Sales[2].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[3].month%>',
+        value: <%=saleData.dataForGraph_Sales[3].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[4].month%>',
+        value: <%=saleData.dataForGraph_Sales[4].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[5].month%>',
+        value: <%=saleData.dataForGraph_Sales[5].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[6].month%>',
+        value: <%=saleData.dataForGraph_Sales[6].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[7].month%>',
+        value: <%=saleData.dataForGraph_Sales[7].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[8].month%>',
+        value: <%=saleData.dataForGraph_Sales[8].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[9].month%>',
+        value: <%=saleData.dataForGraph_Sales[9].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[10].month%>',
+        value: <%=saleData.dataForGraph_Sales[10].value %>
+  },
+      {
+        month: '<%=saleData.dataForGraph_Sales[11].month%>',
+        value: <%=saleData.dataForGraph_Sales[11].value %>
+  }]
+
+
+
+    console.log('sales', data);
+
+    xAxis.data.setAll(data);
+    series.data.setAll(data);
+
+
+    // Make stuff animate on load
+    // https://www.amcharts.com/docs/v5/concepts/animations/
+    series.appear(1000);
+    chart.appear(1000, 100);
+
+  }); // end am5.ready()
+
+
+
+
+  //donuotchart
+
+
+
+
+</script>

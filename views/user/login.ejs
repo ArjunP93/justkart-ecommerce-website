@@ -1,108 +1,80 @@
- <!-- validation using js  -->
+<!-- validation using js  -->
 <script src="/assets/js/validation.js"></script>
 
 
 
 <section>
 
-    <div class="page-header breadcrumb-wrap">
-      <div class="container">
-        <div class="breadcrumb">
-          <a href="/" rel="nofollow">Home</a>
-          <span></span> Pages <span></span> Login / Register
-        </div>
+  <div class="page-header breadcrumb-wrap">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/" rel="nofollow">Home</a>
+        <span></span> Pages <span></span> Login / Register
       </div>
     </div>
-    <main class="main">
-      <section class="p-auto my-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-10 m-auto">
-              <div class="row d-flex justify-content-center">
-                <div class="col-lg-6">
-                  <div
-                    class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5"
-                  >
-                    <div class="padding_eight_all bg-white">
-                      <div class="heading_s1">
-                        <h3 class="mb-30">Login</h3>
-                      </div>
-                      <%if (locals.blockedStatus){%>
-                        <p style="color: red;">You are blocked by admin </p>
-                        <%}%>
-  
+  </div>
+  <main class="main">
+    <section class="p-auto my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 m-auto">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-6">
+                <div
+                  class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                  <div class="padding_eight_all bg-white">
+                    <div class="heading_s1">
+                      <h3 class="mb-30">Login</h3>
+                    </div>
+                    <%if (locals.blockedStatus){%>
+                      <p style="color: red;">You are blocked by admin </p>
+                      <%}%>
+
                         <%if(locals.loginStatus==false){%>
                           <p style="color: red;">Invalid Credentials </p>
                           <%}%>
-                        
-  
-                    
-                        
-   
-  
-  
-  
-  
-                      <form action="/login" method="post">
-                        <div class="form-group">
-                          <input
-                            type=""
-                            required=""
-                            id="emailId"
-                            name="email"
-                            placeholder="Your Email"
-                            onblur="emailValidate()"
-                            
-                            
-                          />
-                          <p style="color: red;" id="emailError"></p>
-                        </div>
-                        <div class="form-group">
-                          <input
-                            required=""
-                            id="passId"
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            onblur="passwordValidate()"
-                      
-                          />
-                          <p style="color: red;" id="passError"></p>
-                        </div>
-                        <div class="login_footer form-group">
-                          <div class="chek-form">
-                            <div class="custome-checkbox">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                name="checkbox"
-                                id="exampleCheckbox1"
-                                value=""
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleCheckbox1"
-                                ><span>Remember me</span></label
-                              >
-                            </div>
-                          </div>
-                          <!-- <a class="text-muted" href="#">Forgot password?</a> -->
-                        </div>
-                        <div class="form-group">
-                          <button
-                            type="submit"
-                            class="btn btn-fill-out btn-block hover-up"
-                            name="login"
-                            style="width: 100%"
-                          >
-                            Log in
-                          </button>
-                        </div>
-                        <div>
-                          <p class="mb-3 text-center text-success">OR</p>
-                        </div> 
-                           <div class="form-group">
-                         <!-- <button
+
+
+
+
+
+
+
+
+
+                            <form action="/login" method="post">
+                              <div class="form-group">
+                                <input type="" required="" id="emailId" name="email" placeholder="Your Email"
+                                  onblur="emailValidate()" />
+                                <p style="color: red;" id="emailError"></p>
+                              </div>
+                              <div class="form-group">
+                                <input required="" id="passId" type="password" name="password" placeholder="Password"
+                                  onblur="passwordValidate()" />
+                                <p style="color: red;" id="passError"></p>
+                              </div>
+                              <div class="login_footer form-group">
+                                <div class="chek-form">
+                                  <div class="custome-checkbox">
+                                    <input class="form-check-input" type="checkbox" name="checkbox"
+                                      id="exampleCheckbox1" value="" />
+                                    <label class="form-check-label" for="exampleCheckbox1"><span>Remember
+                                        me</span></label>
+                                  </div>
+                                </div>
+                                <!-- <a class="text-muted" href="#">Forgot password?</a> -->
+                              </div>
+                              <div class="form-group">
+                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login"
+                                  style="width: 100%">
+                                  Log in
+                                </button>
+                              </div>
+                              <div>
+                                <p class="mb-3 text-center text-success">OR</p>
+                              </div>
+                              <div class="form-group">
+                                <!-- <button
                             type="submit"
                             class="btn btn-fill-out btn-block hover-up"
                             name="login"
@@ -110,26 +82,24 @@
                           > 
                             Request OTP
                           </button> -->
-                           <a href="/otp" class="btn btn-warning w-100">Request OTP</a>
-                        </div> 
-                        <div>
-                          <a class="ms-5" href="/signup"
-                            >New ? Create An Account</a
-                          >
-                        </div>
-                      </form>
-                    </div>
+                                <a href="/otp" class="btn btn-warning w-100">Request OTP</a>
+                              </div>
+                              <div>
+                                <a class="ms-5" href="/signup">New ? Create An Account</a>
+                              </div>
+                            </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </main>
-    
-    <!-- Preloader Start -->
-    <!-- <div id="preloader-active">
+      </div>
+    </section>
+  </main>
+
+  <!-- Preloader Start -->
+  <!-- <div id="preloader-active">
       <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
           <div class="text-center">
@@ -143,7 +113,4 @@
         </div>
       </div>
     </div> -->
-  </section>
-
-
-  
+</section>

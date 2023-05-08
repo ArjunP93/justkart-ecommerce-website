@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>JustKart</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -12,18 +13,14 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
     <!-- Favicon -->
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="assets/imgs/theme/favicon.svg"
-    />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/logoFavicon.svg" />
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/main.css" />
 
 
 
     <!-- tostify -->
-    
+
 
 
 
@@ -43,127 +40,45 @@
 
 
     <title>Welcome</title>
-  </head>
-  <body>
-    
+</head>
+
+<body>
 
 
 
 
-    <%- include('partials/userHeader') %> 
-    
-    <%-body%>
 
-    <%- include('partials/userFooter')%>
+    <%- include('partials/userHeader') %>
 
+        <%-body%>
 
-
-    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins/slick.js"></script>
-    <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="assets/js/plugins/wow.js"></script>
-    <script src="assets/js/plugins/jquery-ui.js"></script>
-    <script src="assets/js/plugins/perfect-scrollbar.js"></script>
-    <script src="assets/js/plugins/magnific-popup.js"></script>
-    <script src="assets/js/plugins/select2.min.js"></script>
-    <script src="assets/js/plugins/waypoints.js"></script>
-    <script src="assets/js/plugins/counterup.js"></script>
-    <script src="assets/js/plugins/jquery.countdown.min.js"></script>
-    <script src="assets/js/plugins/images-loaded.js"></script>
-    <script src="assets/js/plugins/isotope.js"></script>
-    <script src="assets/js/plugins/scrollup.js"></script>
-    <script src="assets/js/plugins/jquery.vticker-min.js"></script>
-    <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
-    <script src="assets/js/plugins/jquery.elevatezoom.js"></script>
-    <!-- Template  JS -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/shop.js"></script>
+            <%- include('partials/userFooter')%>
 
 
-   
 
-
-    
-
-    <!-- firebase otp authentication -->
-
-
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-  
-      <script>
-          
-          const firebaseConfig = {
-  apiKey: "AIzaSyBtDxZ3IH2mC6XPHtNFlNXLirZ-n1Ux1To",
-  authDomain: "justkart-ecom.firebaseapp.com",
-  projectId: "justkart-ecom",
-  storageBucket: "justkart-ecom.appspot.com",
-  messagingSenderId: "713971368717",
-  appId: "1:713971368717:web:72b7236c96ec867910a644"
-};
-          firebase.initializeApp(firebaseConfig);
-          render();
-  /*
-          function render(){
-              window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container',{
-                  'size':'invisible',
-                  'callback':(response)=>{
-                      onSignInSubmit()
-                  }
-              })
-              recaptchaVerifier.render();
-          }
-      */
-  
-     function render(){
-              window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
-          
-              recaptchaVerifier.render();
-          }
-          
-          function phoneAuth(){
-              var number = "+91"+document.getElementById('mobile').value;
-
-              console.log(number);
-        
-              firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function(confirmationResult){
-                  window.confirmationResult = confirmationResult;
-                  console.log(confirmationResult);
-                  coderesult = confirmationResult;
-          
-                  document.getElementById('sender').style.display = 'none';
-                  document.getElementById('verifier').style.display = 'block';
-              }).catch(function(error){
-                  console.log(error.message);
-              });
-          }
-          
-          // Function for OTP verification
-          function codeverify(){
-              var code = document.getElementById('OtpField').value;
-        var number = document.getElementById('mobile').value;
-              coderesult.confirm(code).then(function(){
-                  document.getElementById('verified').style.display = 'block';
-                  document.getElementById('unVerified').style.display = 'none';
-          document.getElementById('verifier').style.display = 'none';
-          document.getElementById('signInBtn').style.display = 'block';
-  
-          document.getElementById('mobileNum').value = number;
-          
-              }).catch(function(){
-                  document.getElementById('verified').style.display = 'none';
-                  document.getElementById('unVerified').style.display = 'block';
-          document.getElementById('signInBtn').style.display = 'none';
-              })
-          }
-  
-  
-      </script>
-
-<!-- new -->
+                <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+                <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+                <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+                <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+                <script src="assets/js/plugins/slick.js"></script>
+                <script src="assets/js/plugins/jquery.syotimer.min.js"></script>
+                <script src="assets/js/plugins/wow.js"></script>
+                <script src="assets/js/plugins/jquery-ui.js"></script>
+                <script src="assets/js/plugins/perfect-scrollbar.js"></script>
+                <script src="assets/js/plugins/magnific-popup.js"></script>
+                <script src="assets/js/plugins/select2.min.js"></script>
+                <script src="assets/js/plugins/waypoints.js"></script>
+                <script src="assets/js/plugins/counterup.js"></script>
+                <script src="assets/js/plugins/jquery.countdown.min.js"></script>
+                <script src="assets/js/plugins/images-loaded.js"></script>
+                <script src="assets/js/plugins/isotope.js"></script>
+                <script src="assets/js/plugins/scrollup.js"></script>
+                <script src="assets/js/plugins/jquery.vticker-min.js"></script>
+                <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
+                <script src="assets/js/plugins/jquery.elevatezoom.js"></script>
+                <!-- Template  JS -->
+                <script src="assets/js/main.js"></script>
+                <script src="assets/js/shop.js"></script>
 
 
 
@@ -171,9 +86,93 @@
 
 
 
+                <!-- firebase otp authentication -->
+
+
+                <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+
+                <script>
+
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyBtDxZ3IH2mC6XPHtNFlNXLirZ-n1Ux1To",
+                        authDomain: "justkart-ecom.firebaseapp.com",
+                        projectId: "justkart-ecom",
+                        storageBucket: "justkart-ecom.appspot.com",
+                        messagingSenderId: "713971368717",
+                        appId: "1:713971368717:web:72b7236c96ec867910a644"
+                    };
+                    firebase.initializeApp(firebaseConfig);
+                    render();
+                    /*
+                            function render(){
+                                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container',{
+                                    'size':'invisible',
+                                    'callback':(response)=>{
+                                        onSignInSubmit()
+                                    }
+                                })
+                                recaptchaVerifier.render();
+                            }
+                        */
+
+                    function render() {
+                        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
+
+                        recaptchaVerifier.render();
+                    }
+
+                    function phoneAuth() {
+                        var number = "+91" + document.getElementById('mobile').value;
+
+                        console.log(number);
+
+                        firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                            window.confirmationResult = confirmationResult;
+                            console.log(confirmationResult);
+                            coderesult = confirmationResult;
+
+                            document.getElementById('sender').style.display = 'none';
+                            document.getElementById('verifier').style.display = 'block';
+                        }).catch(function (error) {
+                            console.log(error.message);
+                        });
+                    }
+
+                    // Function for OTP verification
+                    function codeverify() {
+                        var code = document.getElementById('OtpField').value;
+                        var number = document.getElementById('mobile').value;
+                        coderesult.confirm(code).then(function () {
+                            document.getElementById('verified').style.display = 'block';
+                            document.getElementById('unVerified').style.display = 'none';
+                            document.getElementById('verifier').style.display = 'none';
+                            document.getElementById('signInBtn').style.display = 'block';
+
+                            document.getElementById('mobileNum').value = number;
+
+                        }).catch(function () {
+                            document.getElementById('verified').style.display = 'none';
+                            document.getElementById('unVerified').style.display = 'block';
+                            document.getElementById('signInBtn').style.display = 'none';
+                        })
+                    }
+
+
+                </script>
+
+                <!-- new -->
 
 
 
 
-  </body>
+
+
+
+
+
+
+
+</body>
+
 </html>

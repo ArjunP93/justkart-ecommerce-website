@@ -1,19 +1,114 @@
-const db= require('../model/connection')
-const bannerdb= require('../model/banner')
-const orderSchema= require('../model/orders')
-const objectId = require('mongodb').ObjectId;
-const couponSchema = require('../model/coupon')
-const voucher = require('voucher-code-generator');
-
-
+const db = require("../model/connection");
+const bannerSchema = require("../model/banner");
+const orderSchema = require("../model/orders");
+const objectId = require("mongodb").ObjectId;
+const couponSchema = require("../model/coupon");
+const voucher = require("voucher-code-generator");
 
 module.exports = {
-  listUsers: () => {
+  admin_dashboard: async () => {
+    try {
+      let response = {};
+      let ordercount = await orderSchema.order.countDocuments({});
+      let productsCount = await db.products.countDocuments({});
+      let catagoryCount = await db.category.countDocuments({});
+
+      let revenue = await orderSchema.order.aggregate([
+        {
+          $match: {
+            orderStatus: "Delivered",
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalRevenue: {
+              $sum: "$totalPrice",
+            },
+          },
+        },
+      ]);
+      let monthlyEarnings = await orderSchema.order.aggregate([
+        {
+          $match: {
+            orderStatus: "Delivered",
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            totalRevenue: { $sum: "$totalPrice" },
+          },
+        },
+        {
+          $sort: {
+            _id: 1,
+          },
+        },
+      ]);
+
+      // console.log('monthlyEarnings',monthlyEarnings);
+
+      let paymentcounts = await orderSchema.order.aggregate([
+        {
+          $match: {
+            paymentMethod: { $in: ["COD", "online", "wallet"] },
+          },
+        },
+        {
+          $group: {
+            _id: "$paymentMethod",
+            count: { $sum: 1 },
+          },
+        },
+      ]);
+
+      let monthlySales = await orderSchema.order.aggregate([
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            orders: { $push: "$$ROOT" },
+          },
+        },
+      ]);
+
+      // converting data for graph from aggregate function
+      let dataForGraph_Sales = [];
+      for (let i = 1; i <= 12; i++) {
+        const month = getMonthName(i);
+        const orders =
+          monthlySales.find((sale) => sale._id === i)?.orders || [];
+        const value = orders.length;
+        dataForGraph_Sales.push({ month, value });
+      }
+
+      function getMonthName(monthNumber) {
+        const date = new Date();
+        date.setMonth(monthNumber - 1);
+        return date.toLocaleString("default", { month: "long" });
+      }
+
+      response.ordercount = ordercount;
+      response.productsCount = productsCount;
+      response.catagoryCount = catagoryCount;
+      response.revenue = revenue;
+      response.dataForGraph_Sales = dataForGraph_Sales;
+      response.paymentcounts = paymentcounts;
+      response.monthlyEarnings = monthlyEarnings.pop();
+
+      return response;
+    } catch (error) {
+      console.log("cannot fetch details for dashboard");
+    }
+  },
+
+  listUsers: (page, perPage) => {
     let userData = [];
     return new Promise(async (resolve, reject) => {
       await db.user
         .find()
-        .exec()
+        .skip((page - 1) * perPage)
+        .limit(perPage)
         .then((result) => {
           userData = result;
         });
@@ -227,8 +322,9 @@ module.exports = {
     });
   },
 
-  get_Allbanners: async () => {
-    let bannersFound = await bannerdb.banner.find();
+  get_Allbanners: async (page,perPage) => {
+    let bannersFound = await bannerSchema.banner.find().skip((page - 1) * perPage)
+    .limit(perPage);
     return bannersFound;
   },
 
@@ -236,20 +332,51 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       console.log("inside promise");
       console.log("imagename", Image);
-      uploadedBanner = new bannerdb.banner({
+      uploadedBanner = new bannerSchema.banner({
         title: texts.title,
         description: texts.description,
         link: texts.link,
         image: Image,
+        state: "Inactive",
       });
       await uploadedBanner.save().then((response) => {
         resolve(response);
       });
     });
   },
+  postEditBanner: (bannerId, editedData, imageArray) => {
+    return new Promise(async (resolve, reject) => {
+      await bannerSchema.banner
+        .updateOne(
+          { _id: bannerId },
+          {
+            $set: {
+              title: editedData.title,
+              image: imageArray,
+              description: editedData.description,
+              link: editedData.link,
+            },
+          }
+        )
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  bannerPush: async () => {
+    try {
+      let banners = await bannerSchema.banner.find();
+      return banners;
+    } catch (error) {
+      console.log("didnt get the banners");
+    }
+  },
 
   delete_banner: async (bannerId) => {
-    let deleted = await bannerdb.banner.remove({ _id: bannerId });
+    let deleted = await bannerSchema.banner.deleteOne({
+      _id: objectId(bannerId),
+    });
     return deleted;
   },
 
@@ -312,7 +439,7 @@ module.exports = {
 
       let couponObj = new couponSchema.coupon({
         couponName: data.couponName,
-        code:code[0],
+        code: code[0],
         expiry: data.expiry,
         minPurchase: data.minimumPurchase,
         discountPercentage: data.discountPercentage,
@@ -325,6 +452,28 @@ module.exports = {
       console.log("cannot  add coupon");
     }
   },
+
+  edit_coupons: async (data) => {
+    try {
+      let editedCoupon = await couponSchema.coupon.updateOne(
+        { _id: data.id },
+        {
+          $set: {
+            couponName: data.couponName,
+
+            expiry: data.expiry,
+            minPurchase: data.minimumPurchase,
+            discountPercentage: data.discountPercentage,
+            maxDiscountValue: data.maxDiscountValue,
+            description: data.description,
+          },
+        }
+      );
+      return editedCoupon;
+    } catch (error) {
+      console.log("cannot  edit coupon");
+    }
+  },
   removeCoupon: async (id) => {
     try {
       let deleted = await couponSchema.coupon.deleteOne({ _id: objectId(id) });
@@ -334,46 +483,42 @@ module.exports = {
     }
   },
 
-
-
-  salesReport:async(start,end)=>{
+  salesReport: async (start, end) => {
     try {
       const startDate = new Date(`${start}T00:00:00.000Z`);
       const endDate = new Date(`${end}T23:59:59.999Z`);
 
-      let salesData= await orderSchema.order.find({orderStatus:'Delivered',createdAt:{ $gte:startDate,$lte:endDate}})
-      return salesData
+      let salesData = await orderSchema.order.find({
+        orderStatus: "Delivered",
+        createdAt: { $gte: startDate, $lte: endDate },
+      });
+      return salesData;
     } catch (error) {
-      console.log('cannot find sales data');
+      console.log("cannot find sales data");
     }
-  }, 
-  salesTotal:async(start,end)=>{
+  },
+  salesTotal: async (start, end) => {
     const startDate = new Date(`${start}T00:00:00.000Z`);
     const endDate = new Date(`${end}T23:59:59.999Z`);
     try {
-      const totalSales= await orderSchema.order.aggregate(
-        [
-          {
-            $match:{orderStatus:'Delivered',createdAt:{ $gte:startDate,$lte:endDate}}
+      const totalSales = await orderSchema.order.aggregate([
+        {
+          $match: {
+            orderStatus: "Delivered",
+            createdAt: { $gte: startDate, $lte: endDate },
           },
-          {
-            $group: {
-              _id: null,
-              total: { $sum:"$totalPrice" } 
-
-              }
-            }
-          
-        ]
-      )
-      console.log('total',totalSales);
-      return totalSales[0].total
-      
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$totalPrice" },
+          },
+        },
+      ]);
+      console.log("total", totalSales);
+      return totalSales[0].total;
     } catch (error) {
-      console.log('cannot find total');
+      console.log("cannot find total");
     }
-  }
-
-
-
+  },
 };

@@ -3,18 +3,15 @@
     <div class="row w-75 mt-5">
       <div class="col-md-12">
         <h2 class="text-center">Add Product</h2>
-        <form
-          action="/admin/add-product"          method="POST"
-          enctype="multipart/form-data"
-          onsubmit="validateQuantity()&&validatePrice()&&validateOfferPrice()"
-        >
+        <form action="/admin/add-product" method="POST" enctype="multipart/form-data"
+          onsubmit="validateQuantity()&&validatePrice()&&validateOfferPrice()">
           <label for="">Product Name</label>
           <input type="text" name="name" class="form-control" required />
           <label for="">Description</label>
-          <input type="text" name="description" class="form-control" required/>
+          <input type="text" name="description" class="form-control" required />
 
           <label for="">Quantity</label>
-          <input type="text" name="quantity" id="Quantity" onkeyup="validateQuantity()" class="form-control" required/>
+          <input type="text" name="quantity" id="Quantity" onkeyup="validateQuantity()" class="form-control" required />
           <p style="color: red;" id="QuantityError"></p>
 
 
@@ -27,19 +24,20 @@
           <p style="color: red;" id="PriceError"></p>
 
           <label for="">Offer Price</label>
-          <input type="text" name="OfferPrice" id="OfferPrice" onkeyup="validateOfferPrice()" class="form-control" required />
+          <input type="text" name="OfferPrice" id="OfferPrice" onkeyup="validateOfferPrice()" class="form-control"
+            required />
           <p style="color: red;" id="OfferPriceError"></p>
 
-           <label for="">Category</label>
+          <label for="">Category</label>
 
-           <select class="form-select" name="category" id="cars">
+          <select class="form-select" name="category" id="cars">
             <% availCategory.forEach(function(availCategory,index) { %>
-            <option value="<%= availCategory.CategoryName%>">
-              <%= availCategory.CategoryName%>
-            </option>
-            <% }) %>
+              <option value="<%= availCategory.CategoryName%>">
+                <%= availCategory.CategoryName%>
+              </option>
+              <% }) %>
           </select>
-              
+
 
 
 
@@ -53,30 +51,30 @@
 
           <label for="">Image 1</label>
           <div>
-            <img src=""  width="90px" height="90px" id="displayImg1">
+            <img src="" width="90px" height="90px" id="displayImg1">
           </div>
-          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display1(event)"/>
+          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display1(event)" />
 
 
           <label for="">Image 2</label>
           <div>
-            <img src=""  width="90px" height="90px" id="displayImg2">
+            <img src="" width="90px" height="90px" id="displayImg2">
           </div>
-          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display2(event)"/>
+          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display2(event)" />
 
 
           <label for="">Image 3</label>
           <div>
-            <img src=""  width="90px" height="90px" id="displayImg3">
+            <img src="" width="90px" height="90px" id="displayImg3">
           </div>
-          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display3(event)"/>
+          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display3(event)" />
 
 
           <label for="">Image 4</label>
           <div>
-            <img src=""  width="90px" height="90px" id="displayImg4">
+            <img src="" width="90px" height="90px" id="displayImg4">
           </div>
-          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display4(event)"/>
+          <input type="file" name="Image" accept=".jpg,.jpeg,.png" class="form-control" onchange="display4(event)" />
 
           <button type="submit" class="btn btn-success mt-4">Submit</button>
         </form>
@@ -85,81 +83,74 @@
   </div>
 </section>
 <script>
-  function display1(event){
-    document.getElementById('displayImg1').src= URL.createObjectURL(event.target.files[0])
-    
+  function display1(event) {
+    document.getElementById('displayImg1').src = URL.createObjectURL(event.target.files[0])
+
   }
-  function display2(event){
-    document.getElementById('displayImg2').src= URL.createObjectURL(event.target.files[0])
-    
+  function display2(event) {
+    document.getElementById('displayImg2').src = URL.createObjectURL(event.target.files[0])
+
   }
-  function display3(event){
-    document.getElementById('displayImg3').src= URL.createObjectURL(event.target.files[0])
-    
+  function display3(event) {
+    document.getElementById('displayImg3').src = URL.createObjectURL(event.target.files[0])
+
   }
-  function display4(event){
-    document.getElementById('displayImg4').src= URL.createObjectURL(event.target.files[0])
-    
+  function display4(event) {
+    document.getElementById('displayImg4').src = URL.createObjectURL(event.target.files[0])
+
   }
 
 
-  function validateQuantity(){
-    
-    let  quant = document.getElementById('Quantity').value;
+  function validateQuantity() {
+
+    let quant = document.getElementById('Quantity').value;
     console.log(quant);
 
-    let quantRegx= /^\d+$/;
-   
-    if (!quantRegx.test(quant))
- 
-    {
-      document.getElementById('QuantityError').innerHTML= 'invalid quantity'
+    let quantRegx = /^\d+$/;
+
+    if (!quantRegx.test(quant)) {
+      document.getElementById('QuantityError').innerHTML = 'invalid quantity'
       return false
-    }else{
-      document.getElementById('QuantityError').innerHTML= ''
+    } else {
+      document.getElementById('QuantityError').innerHTML = ''
       return true
     }
 
   }
 
-  function validatePrice(){
-    
-    let  quant = document.getElementById('Price').value;
+  function validatePrice() {
+
+    let quant = document.getElementById('Price').value;
     console.log(quant);
 
-    let quantRegx= /^\d+$/;
-    
-    if (!quantRegx.test(quant))
- 
-    {
+    let quantRegx = /^\d+$/;
 
-      
-      document.getElementById('PriceError').innerHTML= 'invalid Price'
+    if (!quantRegx.test(quant)) {
+
+
+      document.getElementById('PriceError').innerHTML = 'invalid Price'
       return false
-    }else{
+    } else {
       document.getElementById('PriceError').innerHTML = ''
       return true
     }
 
   }
 
-  function validateOfferPrice(){
-    
-    let  quant = document.getElementById('OfferPrice').value;
+  function validateOfferPrice() {
+
+    let quant = document.getElementById('OfferPrice').value;
     console.log(quant);
 
-    let quantRegx= /^\d+$/;
-    if (!quantRegx.test(quant))
- 
-    {
-      document.getElementById('OfferPriceError').innerHTML= 'invalid OfferPrice'
+    let quantRegx = /^\d+$/;
+    if (!quantRegx.test(quant)) {
+      document.getElementById('OfferPriceError').innerHTML = 'invalid OfferPrice'
       return false
-    }else{
-      document.getElementById('OfferPriceError').innerHTML= ''
+    } else {
+      document.getElementById('OfferPriceError').innerHTML = ''
       return true
     }
 
   }
-  
-</script>
 
+</script>

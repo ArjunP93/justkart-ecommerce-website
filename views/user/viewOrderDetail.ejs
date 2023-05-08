@@ -1,174 +1,191 @@
-
-
-
-   
-     
-        
-        <section class="content-main">
-            <div class="content-header">
-                <div>
-                    <h2 class="content-title card-title">Order detail</h2>
-                    <p>Details for Order ID: <%=orderView.hashedId%></p>
-                </div>
+<section class="content-main">
+    <div style="width: 80%;margin: 0 auto;">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Order Details</h2>
+                <p>Details for Order ID: <%=orderView.hashedId%>
+                </p>
             </div>
-            <div class="card">
-                <header class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
-                            <span>
-                                <i class="material-icons md-calendar_today"></i> <b>Wed, Aug 13, 2020, 4:34PM</b>
-                            </span> <br>
-                            <small class="text-muted">Order ID: <%=orderView.hashedId%></small>
-                        </div>
-                        <div class="col-lg-6 ms-auto text-md-end">
-                            <% if (orderView.orderStatus==='Delivered') { %>
-                                <button class="btn btn-primary" id="returnButton" onclick="returnProducts('<%=orderView._id%>','<%=orderView.totalPrice%>')">Return Product</button>
-                                <% } else { %>
-                                <button class="btn btn-primary" disabled>Return Product</button>
-                            <% } %>
-                          </div>
-                          
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                        <span>
+                            <i class="material-icons md-calendar_today"></i> <b>Wed, Aug 13, 2020, 4:34PM</b>
+                        </span> <br>
+                        <small class="text-muted">Order ID: <%=orderView.hashedId%></small>
                     </div>
-                </header> <!-- card-header end// -->
-                <div class="card-body">
-                    <div class="row mb-50 mt-20 order-info-wrap">
-                        <div class="col-md-4">
-                            <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-person"></i>
-                                </span>
-                                <div class="text">
-                                    <h6 class="mb-1">Customer</h6>
-                                    <p class="mb-1">
-                                        <%=orderView.name%><br> <template class="__cf_email__"
-                                            data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template>
-                                        <br> <%=orderView.shippingAddress.mobile%>
-                                    </p>
-                                    <!-- <a href="#">View profile</a> -->
-                                </div>
-                            </article>
-                        </div> <!-- col// -->
-                        <div class="col-md-4">
-                            <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-local_shipping"></i>
-                                </span>
-                                <div class="text">
-                                    <h6 class="mb-1">Order info</h6>
-                                    <p class="mb-1">
-                                        Shipping: Fargo express <br> Pay method: <%=orderView.paymentMethod%> <br> Status: <%=orderView.orderStatus%>
-                                    </p>
-                                    <!-- <a href="#">Download info</a> -->
-                                </div>
-                            </article>
-                        </div> <!-- col// -->
-                        <div class="col-md-4">
-                            <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-place"></i>
-                                </span>
-                                <div class="text">
-                                    <h6 class="mb-1">Deliver to</h6>
-                                    <p class="mb-1">
-                                        City: <%=orderView.shippingAddress.city%> <br><%=orderView.shippingAddress.street%>,<%=orderView.shippingAddress.building%><br> <%=orderView.shippingAddress.pincode%>
-                                    </p>
-                                    <!-- <a href="#">View profile</a> -->
-                                </div>
-                            </article>
-                        </div> <!-- col// -->
-                    </div> <!-- row // -->
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th width="40%">Product</th>
-                                            <th width="20%">Unit Price</th>
-                                            <th width="20%">Quantity</th>
-                                            <th width="20%" class="text-end">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                    <div class="col-lg-6 ms-auto text-md-end">
+                        <% if (orderView.orderStatus==='Delivered' ) { %>
+                            <button class="btn btn-primary" id="returnButton"
+                                onclick="returnProducts('<%=orderView._id%>','<%=orderView.totalPrice%>')">Return
+                                Product</button>
+                            <% } else { %>
+                                <button class="btn btn-primary" disabled>Return Product</button>
+                                <% } %>
+                    </div>
 
-                                        <% orderView.productDetails.forEach((data)=> { %>
+                </div>
+            </header> <!-- card-header end// -->
+            <div class="card-body">
+                <div class="row mb-50 mt-20 order-info-wrap">
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-person"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Customer</h6>
+                                <p class="mb-1">
+                                    <%=orderView.name%><br> <template class="__cf_email__"
+                                            data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template>
+                                        <br>
+                                        <%=orderView.shippingAddress.mobile%>
+                                </p>
+                                <!-- <a href="#">View profile</a> -->
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-local_shipping"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Order info</h6>
+                                <p class="mb-1">
+                                    Shipping: Fargo express <br> Pay method: <%=orderView.paymentMethod%> <br> Status:
+                                        <%=orderView.orderStatus%>
+                                </p>
+                                <!-- <a href="#">Download info</a> -->
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-place"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Deliver to</h6>
+                                <p class="mb-1">
+                                    City: <%=orderView.shippingAddress.city%> <br>
+                                        <%=orderView.shippingAddress.street%>,<%=orderView.shippingAddress.building%>
+                                                <br>
+                                                <%=orderView.shippingAddress.pincode%>
+                                </p>
+                                <!-- <a href="#">View profile</a> -->
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                </div> <!-- row // -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="40%">Product</th>
+                                        <th width="20%">Unit Price</th>
+                                        <th width="20%">Quantity</th>
+                                        <th width="20%" class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% orderView.productDetails.forEach((data)=> { %>
                                         <tr>
                                             <td>
                                                 <a class="itemside" href="#">
                                                     <div class="left">
-                                                        <img src="/uploads/<%=data.Image[1]%>" width="40" height="40" class="img-xs" alt="Item">
+                                                        <img src="/uploads/<%=data.Image[1]%>" width="40" height="40"
+                                                            class="img-xs" alt="Item">
                                                     </div>
-                                                    <div class="info"> <%=data.Productname%> </div>
+                                                    <div class="info">
+                                                        <%=data.Productname%>
+                                                    </div>
                                                 </a>
                                             </td>
-                                            <td> ₹<%=data.Price%> </td>
-                                            <td> <%=data.quantity%> </td>
-                                            <td class="text-end"> ₹<%=data.subtotal%> </td>
-                                        </tr>
-                                        
-                                        <% } )%>
-                                        
-                                        <tr>
-                                            <td colspan="4">
-                                                <article class="float-end">
-                                                    <dl class="dlist">
-                                                        <dt>Subtotal:</dt>
-                                                        <dd>₹<%=orderView.totalPrice%></dd>
-                                                    </dl>
-                                                    <dl class="dlist">
-                                                        <dt>Shipping cost:</dt>
-                                                        <dd>₹</dd>
-                                                    </dl>
-                                                    <dl class="dlist">
-                                                        <dt>Grand total:</dt>
-                                                        <dd> <b class="h5">₹<%=orderView.totalPrice%></b> </dd>
-                                                    </dl>
-                                                    <dl class="dlist">
-                                                        <dt class="text-muted">Status:</dt>
-                                                        <dd>
-                                                            <span class="badge rounded-pill alert-success text-success">Payment done</span>
-                                                        </dd>
-                                                    </dl>
-                                                </article>
+                                            <td> <%=data.Price.toLocaleString('en-IN', { style: 'currency' ,
+                                                    currency: 'INR' })%>
+                                            </td>
+                                            <td>
+                                                <%=data.quantity%>
+                                            </td>
+                                            <td class="text-end"> <%=data.subtotal.toLocaleString('en-IN', {
+                                                    style: 'currency' , currency: 'INR' })%>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div> <!-- table-responsive// -->
-                        </div> <!-- col// -->
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-4">
-        
-        
-                        </div> <!-- col// -->
-                    </div>
-                </div> <!-- card-body end// -->
-            </div> <!-- card end// -->
-        </section> <!-- content-main end// -->
-    
-        <script>
-            function returnProducts(id,totalRefund){
-                console.log('inside ajax');
 
-                $.ajax({
-                url: '/return-products',
-                type: 'POST',
-                data: {
-                    orderId: id,
-                    
-                    totalAmount: totalRefund
-                },
-                success: function (response) {
+                                        <% } )%>
 
-                    swal("Order return success!", "Amount refunded to wallet!", "success").then(function(){
-                        document.getElementById('returnButton').disabled = true
-      });
+                                            <tr>
+                                                <td colspan="4">
+                                                    <article class="float-end">
+                                                        <dl class="dlist">
+                                                            <dt>Subtotal:</dt>
+                                                            <dd><%=orderView.totalPrice.toLocaleString('en-IN', {
+                                                                    style: 'currency' , currency: 'INR' })%>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl class="dlist">
+                                                            <dt>Shipping cost:</dt>
+                                                            <dd>₹</dd>
+                                                        </dl>
+                                                        <dl class="dlist">
+                                                            <dt>Grand total:</dt>
+                                                            <dd> <b class="h5"><%=orderView.totalPrice.toLocaleString('en-IN',
+                                                                        { style: 'currency' , currency: 'INR' })%></b>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl class="dlist">
+                                                            <dt class="text-muted">Status:</dt>
+                                                            <dd>
+                                                                <span
+                                                                    class="badge rounded-pill alert-success text-success">Payment
+                                                                    done</span>
+                                                            </dd>
+                                                        </dl>
+                                                    </article>
+                                                </td>
+                                            </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- table-responsive// -->
+                    </div> <!-- col// -->
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-4">
 
-                }
-            })
 
+                    </div> <!-- col// -->
+                </div>
+            </div> <!-- card-body end// -->
+        </div> <!-- card end// -->
+    </div>
+</section> <!-- content-main end// -->
+
+<script>
+    function returnProducts(id, totalRefund) {
+        console.log('inside ajax');
+
+        $.ajax({
+            url: '/return-products',
+            type: 'POST',
+            data: {
+                orderId: id,
+
+                totalAmount: totalRefund
+            },
+            success: function (response) {
+
+                swal("Order return success!", "Amount refunded to wallet!", "success").then(function () {
+                    document.getElementById('returnButton').disabled = true
+                });
 
             }
-        </script>
+        })
 
 
+    }
+</script>

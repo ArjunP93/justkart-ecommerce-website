@@ -12,12 +12,13 @@ function addTocart(id,price){
      url: '/add-to-cart',
      type: 'GET',
      data: {
-       proId: id,
+       proId:id,
        quantity: quant,
        subTotal:subt
      },
      success: function (response) {
        console.log(response);
+       swal("success!", "Item added to cart!", "success");
      }
    });
  

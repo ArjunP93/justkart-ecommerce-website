@@ -1,23 +1,22 @@
-const bcrypt = require('bcrypt')
-const { user, products } = require('../model/connection')
-const db = require('../model/connection')
-const cartSchema= require('../model/cart')
-const orderSchema= require('../model/orders')
-const bannerschema = require('../model/banner')
-const couponSchema = require('../model/coupon')
-const wishlistSchema = require('../model/wishlist')
-const walletSchema = require('../model/wallet')
-const objectId = require('mongodb').ObjectId;
-const crypto = require('crypto');
-const voucher = require('voucher-code-generator');
+const bcrypt = require("bcrypt");
+const { user, products } = require("../model/connection");
+const db = require("../model/connection");
+const cartSchema = require("../model/cart");
+const orderSchema = require("../model/orders");
 
-const Razorpay = require('razorpay');
+const couponSchema = require("../model/coupon");
+const wishlistSchema = require("../model/wishlist");
+const walletSchema = require("../model/wallet");
+const objectId = require("mongodb").ObjectId;
+const crypto = require("crypto");
+const voucher = require("voucher-code-generator");
+
+const Razorpay = require("razorpay");
 
 var instance = new Razorpay({
-  key_id: 'rzp_test_o5Ng9C5xyQwZh3',
-  key_secret: 'lSPYIhoo2ge5j0t35wqsa9sr',
+  key_id: "rzp_test_o5Ng9C5xyQwZh3",
+  key_secret: "lSPYIhoo2ge5j0t35wqsa9sr",
 });
-
 
 module.exports = {
   doSignUp: (userData) => {
@@ -168,10 +167,21 @@ module.exports = {
         });
     });
   },
+  cart_wishlist_count: async (uId) => {
+    let countsForHeader = {};
+    let cart = await cartSchema.cart.findOne({ userId: objectId(uId) });
+    let wishlist = await wishlistSchema.wishlist.findOne({
+      userId: objectId(uId),
+    });
+    countsForHeader.cartCount = cart.product.length;
+    countsForHeader.wishCount = wishlist.product.length;
+
+    return countsForHeader;
+  },
 
   addToCart_post: (proId, uId, qty, subTotal) => {
     let productObj = {
-      _id:objectId(proId),
+      _id: objectId(proId),
       quantity: qty,
       subtotal: subTotal,
     };
@@ -226,7 +236,7 @@ module.exports = {
         .populate("product._id");
 
       (response.cart = productCart),
-        (response.count = productCart.product.length);
+        (response.count = productCart?.product.length);
 
       console.log("response of populate", response);
 
@@ -395,24 +405,14 @@ module.exports = {
     try {
       console.log("addre", addressId);
       console.log("usererer", uId);
-      let address = await db.address.findOne(
-        { userid: objectId(uId), "Address._id": objectId(addressId) },
-        
-      );
-      console.log('saakdjdskfkdsf',address);
+      let address = await db.address.findOne({
+        userid: objectId(uId),
+        "Address._id": objectId(addressId),
+      });
+      console.log("saakdjdskfkdsf", address);
       return address;
-      
     } catch (error) {
       console.log("didnt get the user address");
-    }
-  },
-
-  bannerPush: async () => {
-    try {
-      let banners = await bannerschema.banner.find();
-      return banners;
-    } catch (error) {
-      console.log("didnt get the banners");
     }
   },
 
@@ -427,7 +427,6 @@ module.exports = {
 
   cancelOrder: async (oId) => {
     try {
-      console.log("orderid", oId);
       let updateOdrder = await orderSchema.order.updateOne(
         { _id: objectId(oId) },
         { $set: { orderStatus: "cancelled by user" } }
@@ -437,16 +436,18 @@ module.exports = {
       console.log("cannot update the order status");
     }
   },
-  refundToWallet: (uId,refund,oId) => {
+  refundToWallet: (uId, refund, oId) => {
     try {
       let transactionsObj = {
         _id: objectId(oId),
-        type: 'credit',
+        type: "credit",
         amount: refund,
-        createdAt : new Date(),
+        createdAt: new Date(),
       };
       return new Promise(async (resolve, reject) => {
         let walletDetails = await walletSchema.wallet.findOne({ userId: uId });
+        let currentBalance = walletDetails.balance;
+        let newBalance = currentBalance + refund;
 
         if (walletDetails == null) {
           const walletItem = new walletSchema.wallet({
@@ -454,61 +455,59 @@ module.exports = {
             balance: refund,
             transactions: transactionsObj,
           });
-          await walletItem.save()
-          
-          
+          await walletItem.save();
         } else {
           await walletSchema.wallet.updateOne(
             { userId: objectId(uId) },
             {
-              $set: { balance: refund },
+              $set: { balance: newBalance },
               $push: { transactions: transactionsObj },
             }
           );
         }
         //update product fund status
-          await orderSchema.order.updateOne(
-            {_id:oId},
-            {
-              $set:{orderStatus:'returned',paymentStatus:'refunded'}
-            }
-          )
+        await orderSchema.order.updateOne(
+          { _id: oId },
+          {
+            $set: { orderStatus: "returned", paymentStatus: "refunded" },
+          }
+        );
 
-        resolve()
+        resolve();
       });
     } catch (error) {
       console.log("cannot refund or update");
     }
   },
-  purchaseWithWallet:async(uId,oId,amount,walletFund)=>{
+  purchaseWithWallet: async (uId, oId, amount, walletFund) => {
     try {
       let transObj = {
         _id: objectId(oId),
         type: "debit",
         amount: amount,
-        createdAt : new Date(),
+        createdAt: new Date(),
       };
-      let walletBalance = parseInt(walletFund-amount)
+      let walletBalance = parseInt(walletFund - amount);
       let result = await walletSchema.wallet.updateOne(
         { userId: objectId(uId) },
         {
           $set: { balance: walletBalance },
-          $push: { transactions: transObj }
+          $push: { transactions: transObj },
         }
       );
-      return result
+      return result;
     } catch (error) {
-      console.log('could not purchase with walllet balance');
+      console.log("could not purchase with walllet balance");
     }
-
   },
-  checkWalletBalance:async(uId)=>{
+  checkWalletBalance: async (uId) => {
     try {
-      let balance = await walletSchema.wallet.findOne({ userId: objectId(uId) })
-      return balance
+      let balance = await walletSchema.wallet.findOne({
+        userId: objectId(uId),
+      });
+      return balance;
     } catch (error) {
-      console.log('cannot find balance');
-      
+      console.log("cannot find balance");
     }
   },
 
@@ -558,13 +557,7 @@ module.exports = {
 
       await orderObj.save();
 
-      // add coupon to user schema
-      if (couponCode !== "N/A") {
-        await db.user.updateOne(
-          { _id: userid },
-          { $push: { coupons: couponCode } }
-        );
-      }
+      
 
       return Promise.resolve(orderObj._id);
     } catch (error) {
@@ -670,6 +663,13 @@ module.exports = {
       return update;
     } catch (error) {
       console.log("cannot update order status");
+    }
+  },
+
+  // add coupon to user schema
+ couponAddtoUser:async(Code,userid)=> {
+    if (Code !== "N/A") {
+      await db.user.updateOne({ _id: userid }, { $push: { coupons: Code } });
     }
   },
 
@@ -817,4 +817,4 @@ module.exports = {
         });
     });
   },
-}; 
+};
