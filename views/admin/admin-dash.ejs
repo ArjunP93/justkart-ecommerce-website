@@ -33,8 +33,7 @@
               class="text-primary material-icons md-monetization_on"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Revenue</h6>
-            <span><%=saleData.revenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR'
-                })%></span>
+            <span><%=saleData.revenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR' })%></span>
             <span class="text-sm"> Shipping fees are not included </span>
           </div>
         </article>
@@ -48,7 +47,7 @@
           <div class="text">
             <h6 class="mb-1 card-title">Orders</h6>
             <span>
-              <%=saleData.ordercount%>
+              <%=saleData?.ordercount%>
             </span>
             <span class="text-sm"> Excluding orders in transit </span>
           </div>
@@ -63,9 +62,9 @@
           <div class="text">
             <h6 class="mb-1 card-title">Products</h6>
             <span>
-              <%=saleData.productsCount%>
+              <%=saleData?.productsCount%>
             </span>
-            <span class="text-sm"> In <%=saleData.catagoryCount%> Categories </span>
+            <span class="text-sm"> In <%=saleData?.catagoryCount%> Categories </span>
           </div>
         </article>
       </div>
@@ -77,7 +76,7 @@
               class="text-info material-icons md-shopping_basket"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Monthly Earning</h6>
-            <span><%=saleData.monthlyEarnings.totalRevenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR'
+            <span><%=saleData.monthlyEarnings?.totalRevenue.toLocaleString('en-IN', { style: 'currency' , currency: 'INR'
                 })%></span>
             <span class="text-sm"> Based in your local time. </span>
           </div>
@@ -644,15 +643,15 @@
       },
       {
         category: "Online",
-        value: <%=saleData.paymentcounts[0].count %>
+        value: <%=saleData?.paymentcounts[0]?.count %>
     },
       {
         category: "Wallet",
-        value: <%=saleData.paymentcounts[1].count %>
+        value: <%=saleData?.paymentcounts[1]?.count %>
     },
       {
         category: "COD",
-        value: <%=saleData.paymentcounts[2].count %>
+        value: <%=saleData?.paymentcounts[2]?.count %>
     }
     ];
 
@@ -684,10 +683,10 @@
     });
 
     // hide dummy
-    series0.dataItems[0].hide(0);
+    series0?.dataItems[0].hide(0);
 
     // reveal container
-    container.appear(1000, 100);
+    container?.appear(1000, 100);
 
   }); // end am5.ready()
 </script>
@@ -801,51 +800,51 @@
     var data = [
       {
         month: '<%=saleData.dataForGraph_Sales[0].month%>',
-        value: <%=saleData.dataForGraph_Sales[0].value %>
+        value: <%=saleData?.dataForGraph_Sales[0].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[1].month%>',
-        value: <%=saleData.dataForGraph_Sales[1].value %>
+        value: <%=saleData?.dataForGraph_Sales[1].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[2].month%>',
-        value: <%=saleData.dataForGraph_Sales[2].value %>
+        value: <%=saleData?.dataForGraph_Sales[2].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[3].month%>',
-        value: <%=saleData.dataForGraph_Sales[3].value %>
+        value: <%=saleData?.dataForGraph_Sales[3].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[4].month%>',
-        value: <%=saleData.dataForGraph_Sales[4].value %>
+        value: <%=saleData?.dataForGraph_Sales[4].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[5].month%>',
-        value: <%=saleData.dataForGraph_Sales[5].value %>
+        value: <%=saleData?.dataForGraph_Sales[5].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[6].month%>',
-        value: <%=saleData.dataForGraph_Sales[6].value %>
+        value: <%=saleData?.dataForGraph_Sales[6].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[7].month%>',
-        value: <%=saleData.dataForGraph_Sales[7].value %>
+        value: <%=saleData?.dataForGraph_Sales[7].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[8].month%>',
-        value: <%=saleData.dataForGraph_Sales[8].value %>
+        value: <%=saleData?.dataForGraph_Sales[8].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[9].month%>',
-        value: <%=saleData.dataForGraph_Sales[9].value %>
+        value: <%=saleData?.dataForGraph_Sales[9].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[10].month%>',
-        value: <%=saleData.dataForGraph_Sales[10].value %>
+        value: <%=saleData?.dataForGraph_Sales[10].value %>
   },
       {
         month: '<%=saleData.dataForGraph_Sales[11].month%>',
-        value: <%=saleData.dataForGraph_Sales[11].value %>
+        value: <%=saleData?.dataForGraph_Sales[11].value %>
   }]
 
 
