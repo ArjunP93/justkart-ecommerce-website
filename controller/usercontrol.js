@@ -378,7 +378,8 @@ module.exports = {
   checkout: async (req, res) => {
     let userid = req.session.user._id;
 
-    let address = await userhelpers.getAddress(userid);
+    let addressFetch = await userhelpers.getAddress(userid);
+    let address = addressFetch ? addressFetch : { Address: [] };
     let cart = await userhelpers.viewUser_cart(userid);
     let total_checkout = await userhelpers.cartTotal(userid);
     let count = await userhelpers.cart_wishlist_count(userid);
@@ -397,7 +398,7 @@ module.exports = {
     let userInfo = await userhelpers.userDetails(userid);
 
     let cart = await userhelpers.viewCart_aggregate(userid);
-    req.session.latestCoupon = req.body.couponCode
+    req.session.latestCoupon = req.body.couponCode;
 
     //coupon code null check
     let couponCode;
@@ -463,7 +464,7 @@ module.exports = {
         req.session.latestOrder = orderId;
 
         if (req.body.paymentMethod === "COD") {
-          userhelpers.couponAddtoUser(couponCode,userid);
+          userhelpers.couponAddtoUser(couponCode, userid);
           userhelpers.emptyCart(userid);
           response.COD = true;
           res.json(response);
@@ -512,7 +513,7 @@ module.exports = {
                 )
                 .then(async () => {
                   await userhelpers.updateOrderPayment(orderId);
-                  await userhelpers.couponAddtoUser(couponCode,userid)
+                  await userhelpers.couponAddtoUser(couponCode, userid);
                   await userhelpers.emptyCart(userid);
                   response.wallet = true;
                   response.balanceError = false;
@@ -523,7 +524,6 @@ module.exports = {
           });
         }
       });
-    
   },
   post_check_wallet: (req, res) => {
     let amountToPay = parseInt(req.body.total);
@@ -533,7 +533,7 @@ module.exports = {
 
     userhelpers.checkWalletBalance(userId).then((result) => {
       console.log("balance", result);
-      let walletbalance = result?.balance;
+      let walletbalance = result == null ? 0 : result.balance;
       if (walletbalance < amountToPay) {
         if (walletPlusOnline) {
           res.json({ payable: true, walletbalance });
@@ -547,15 +547,14 @@ module.exports = {
   },
 
   payment_verify: (req, res) => {
-    let couponCode=req.session.latestCoupon
+    let couponCode = req.session.latestCoupon;
     let payment = req.body.payment;
     let orderId = req.session.latestOrder;
     let userId = req.session.user._id;
     userhelpers.verifyPayment(req.body).then(async (success) => {
       if (success.status) {
-        
         await userhelpers.updateOrderPayment(orderId);
-        await userhelpers.couponAddtoUser(couponCode,userId)
+        await userhelpers.couponAddtoUser(couponCode, userId);
         await userhelpers.emptyCart(userId);
         res.json(true);
       }
@@ -606,15 +605,14 @@ module.exports = {
 
   get_userOrdersExpand: (req, res) => {
     let orderId = req.params.id;
-    let userId = req.session.user._id
+    let userId = req.session.user._id;
     userhelpers.expandUserOrders(orderId).then(async (orderView) => {
       let countHead = await userhelpers.cart_wishlist_count(userId);
       res.render("user/viewOrderDetail", {
         orderView,
         loginheader: true,
         cartCount: countHead.cartCount,
-      wishCount: countHead.wishCount
-
+        wishCount: countHead.wishCount,
       });
     });
   },

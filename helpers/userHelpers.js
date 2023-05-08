@@ -173,8 +173,8 @@ module.exports = {
     let wishlist = await wishlistSchema.wishlist.findOne({
       userId: objectId(uId),
     });
-    countsForHeader.cartCount = cart.product.length;
-    countsForHeader.wishCount = wishlist.product.length;
+    countsForHeader.cartCount = cart ? cart.product.length: 0
+    countsForHeader.wishCount = wishlist ? wishlist.product.length: 0
 
     return countsForHeader;
   },
