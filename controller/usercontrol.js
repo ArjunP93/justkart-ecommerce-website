@@ -663,6 +663,15 @@ module.exports = {
       res.redirect("/account");
     });
   },
+  remove_Address: async (req, res) => {
+    let userId = req.session.user._id;
+    let addressid = req.body.id;
+    await db.address.updateOne(
+      { userid: objectId(userId) },
+      { $pull: { Address: { _id: objectId(addressid) } } }
+    );
+    res.json(true);
+  },
 
   Post_verifyCoupon: (req, res) => {
     let userId = req.session.user._id;
@@ -670,7 +679,7 @@ module.exports = {
     let total = req.body.total;
     console.log("total", total);
     userhelpers.verifyCouponCode(userId, total, couponCode).then((response) => {
-      console.log("helper response", response);
+     
 
       res.json(response);
     });

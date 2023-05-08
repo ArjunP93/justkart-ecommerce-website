@@ -346,7 +346,8 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% walletResponse?.transactions.forEach((transactions)=> { %>
+                                                            <% walletResponse?.transactions.forEach((transactions)=> {
+                                                                %>
                                                                 <% const timestamp=new Date(transactions.createdAt);
                                                                     const options={ month: 'long' , day: 'numeric' ,
                                                                     year: 'numeric' , hour: 'numeric' ,
@@ -443,10 +444,12 @@
                                                                     <%=multipleAddress.Address[i].building%>,<br>
                                                                         <%=multipleAddress.Address[i].city%>, <br>
                                                                             <%=multipleAddress.Address[i].state%>,<br>
-                                                                                <%=multipleAddress.Address[i].mobile%>.
+                                                                                <%=multipleAddress.Address[i].mobile%>
                                                             </address>
                                                             <p>India</p>
-                                                            <a href="#" class="btn-small">Remove</a>
+                                                            <button
+                                                                onclick="deleteAddress('<%=multipleAddress.Address[i]._id%>')"
+                                                                class="btn-small">Remove</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -604,3 +607,43 @@
             </div>
         </section>
     </main>
+
+    <script>
+
+        function deleteAddress(id) {
+
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover the address!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: '/delete-address',
+                            type: 'delete',
+                            data: {
+                                id: id
+                            },
+                            success: function (response) {
+                                if (response) {
+                                    location.reload()
+                                }
+                            }
+                        })
+                        swal("Your address is deleted!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Canceled");
+                    }
+                });
+        }
+
+
+
+
+
+    </script>

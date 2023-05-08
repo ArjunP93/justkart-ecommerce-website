@@ -10,10 +10,9 @@
 
         <% if(locals.address.Address.length==0) {%>
           <input type="text" id="noAddress" style="display: none;" value="0">
-          <h2>No Addrerss added</h2>
-          <%} %>
-
-
+          <h2>No Addrerses added</h2>
+          <%} else { %>
+            
 
             <form id="checkout-form">
               <% address.Address.forEach((data)=> { %>
@@ -107,6 +106,18 @@
                   <button type="button" id="checkoutButton" onclick="checkoutAjax()"
                     class="btn btn-fill-out btn-block mt-30">Proceed to payment</button>
             </form>
+
+
+
+
+
+
+
+            <% } %>
+
+
+
+            
 
 
 
@@ -298,14 +309,7 @@
 
   function checkoutAjax() {
 
-    let address_exist = document.getElementById('noAddress').value
-    if (address_exist == '0') {
-
-      swal("Add address!", "add shipping address and continue!", "warning").then(function () {
-        location.reload();
-      });
-
-    } else {
+    
       $.ajax({
         url: '/checkout',
         type: 'POST',
@@ -343,7 +347,7 @@
 
 
 
-  }
+  
   //coupon verify
 
   function couponVerify() {

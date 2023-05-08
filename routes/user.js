@@ -29,6 +29,8 @@ router.post(
   controller.post_addAddress
 );
 
+router.delete('/delete-address',controller.remove_Address)
+
 router.get("/shop", controller.shopView);
 
 router.get("/logout", controller.userlogout);

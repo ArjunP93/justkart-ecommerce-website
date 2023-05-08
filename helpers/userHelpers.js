@@ -372,7 +372,7 @@ module.exports = {
 
     console.log(addressobj, "addressobj");
     return new Promise(async (resolve, reject) => {
-      let addressDetails = await db.address.findOne({ userId: uId });
+      let addressDetails = await db.address.findOne({ userid: uId });
 
       if (addressDetails == null) {
         const addressItem = new db.address({
