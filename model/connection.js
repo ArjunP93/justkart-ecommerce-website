@@ -8,6 +8,17 @@ const db = mongoose
   .then(() => console.log("Database connected!"))
   .catch((err) => console.log(err));
 
+// const db = mongoose
+//   .connect("mongodb+srv://arjun1993mnr:godofWar766@cluster0.l1csvxi.mongodb.net/", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("Database connected!"))
+//   .catch((err) => console.log(err));
+
+
+
+
 const userschema = new mongoose.Schema({
   username: {
     type: String,

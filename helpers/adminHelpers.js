@@ -88,13 +88,13 @@ module.exports = {
         return date.toLocaleString("default", { month: "long" });
       }
 
-      response.ordercount = ordercount;
-      response.productsCount = productsCount;
-      response.catagoryCount = catagoryCount;
-      response.revenue = revenue;
-      response.dataForGraph_Sales = dataForGraph_Sales;
-      response.paymentcounts = paymentcounts;
-      response.monthlyEarnings = monthlyEarnings.pop();
+      response.ordercount = ordercount==null ? undefined : ordercount;
+      response.productsCount = productsCount==null ? undefined : productsCount;
+      response.catagoryCount = catagoryCount==null ? undefined : catagoryCount;
+      response.revenue = revenue==null ? undefined : revenue;
+      response.dataForGraph_Sales = dataForGraph_Sales==null ? undefined : dataForGraph_Sales;
+      response.paymentcounts = paymentcounts==null ? undefined : paymentcounts;
+      response.monthlyEarnings = monthlyEarnings?.pop();
 
       return response;
     } catch (error) {
