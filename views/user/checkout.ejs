@@ -78,7 +78,7 @@
                       <h5 id="ShowBalance" style="color: darkgreen;"></h5>
                     </div>
 
-                    <div class="form-check">
+                    <div class="form-check" id="walletonline" style="display: none;">
                       <input class="form-check-input" type="radio" name="paymentMethod" value="wallet+online"
                         onclick="walletCheckForPayable()">
                       <label class="form-check-label" for="flexRadioDefault1">
@@ -259,7 +259,7 @@
             style: 'currency',
             currency: 'INR'
           })}`
-
+          document.getElementById('walletonline').style.display = 'block'
           return false
         }
         else {
