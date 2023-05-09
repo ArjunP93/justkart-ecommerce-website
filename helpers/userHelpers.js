@@ -127,7 +127,6 @@ module.exports = {
         .find({ _id: id })
         .exec()
         .then((response) => {
-          
           resolve(response[0]);
         });
     });
@@ -173,8 +172,8 @@ module.exports = {
     let wishlist = await wishlistSchema.wishlist.findOne({
       userId: objectId(uId),
     });
-    countsForHeader.cartCount = cart ? cart.product.length: 0
-    countsForHeader.wishCount = wishlist ? wishlist.product.length: 0
+    countsForHeader.cartCount = cart ? cart.product.length : 0;
+    countsForHeader.wishCount = wishlist ? wishlist.product.length : 0;
 
     return countsForHeader;
   },
@@ -446,7 +445,6 @@ module.exports = {
       };
       return new Promise(async (resolve, reject) => {
         let walletDetails = await walletSchema.wallet.findOne({ userId: uId });
-       
 
         if (walletDetails == null) {
           const walletItem = new walletSchema.wallet({
@@ -480,7 +478,7 @@ module.exports = {
       console.log("cannot refund or update");
     }
   },
-  purchaseWithWallet: async (uId, oId, amount=0, walletFund=0) => {
+  purchaseWithWallet: async (uId, oId, amount = 0, walletFund = 0) => {
     try {
       let transObj = {
         _id: objectId(oId),
@@ -547,8 +545,6 @@ module.exports = {
         coupons: couponCode,
       });
 
-      // console.log('objectiddd',orderObj._id);
-
       //hashing id
       let id = orderObj._id;
       const hash = crypto.createHash("sha256");
@@ -558,8 +554,6 @@ module.exports = {
       orderObj.hashedId = userHashId;
 
       await orderObj.save();
-
-      
 
       return Promise.resolve(orderObj._id);
     } catch (error) {
@@ -669,7 +663,7 @@ module.exports = {
   },
 
   // add coupon to user schema
- couponAddtoUser:async(Code,userid)=> {
+  couponAddtoUser: async (Code, userid) => {
     if (Code !== "N/A") {
       await db.user.updateOne({ _id: userid }, { $push: { coupons: Code } });
     }
@@ -685,10 +679,11 @@ module.exports = {
         if (couponExist) {
           if (new Date(couponExist.expiry) - new Date() > 0) {
             if (total >= couponExist.minPurchase) {
-              let couponDiscount =total * (couponExist.discountPercentage / 100)
-              let discountedTotal =total - couponDiscount ;
+              let couponDiscount =
+                total * (couponExist.discountPercentage / 100);
+              let discountedTotal = total - couponDiscount;
               if (discountedTotal > couponExist.maxDiscountValue) {
-                couponDiscount =couponExist.maxDiscountValue
+                couponDiscount = couponExist.maxDiscountValue;
                 updatedCartTotal = total - couponExist.maxDiscountValue;
               } else {
                 updatedCartTotal = discountedTotal;
@@ -700,10 +695,15 @@ module.exports = {
               console.log("couponused", couponUsed);
               if (couponUsed) {
                 couponValid = false;
-                resolve({ couponValid, updatedCartTotal, });
+                resolve({ couponValid, updatedCartTotal });
               } else {
                 couponValid = true;
-                resolve({ couponValid, couponCode, updatedCartTotal,couponDiscount });
+                resolve({
+                  couponValid,
+                  couponCode,
+                  updatedCartTotal,
+                  couponDiscount,
+                });
               }
             } else {
               resolve({

@@ -12,7 +12,7 @@
           <input type="text" id="noAddress" style="display: none;" value="0">
           <h2>No Addrerses added</h2>
           <%} else { %>
-            
+
 
             <form id="checkout-form">
               <% address.Address.forEach((data)=> { %>
@@ -117,23 +117,23 @@
 
 
 
-            
 
 
 
 
 
-            <br>
+
+              <br>
 
 
 
-            <br>
-            <div style="width: 35rem; height: 3rem;background-color: whitesmoke; padding: 20px;">
-              <a href="/account">
-                <h5>+ Add an address</h5>
-              </a>
+              <br>
+              <div style="width: 35rem; height: 3rem;background-color: whitesmoke; padding: 20px;">
+                <a href="/account">
+                  <h5>+ Add an address</h5>
+                </a>
 
-            </div>
+              </div>
 
 
       </div>
@@ -309,45 +309,45 @@
 
   function checkoutAjax() {
 
-    
-      $.ajax({
-        url: '/checkout',
-        type: 'POST',
-        data: $('#checkout-form').serialize(),
-        success: function (response) {
-          if (response.COD) {
-            swal("Order placed!", "You clicked the button!", "success").then(function () {
+
+    $.ajax({
+      url: '/checkout',
+      type: 'POST',
+      data: $('#checkout-form').serialize(),
+      success: function (response) {
+        if (response.COD) {
+          swal("Order placed!", "You clicked the button!", "success").then(function () {
+            location.href = '/order-details';
+          });
+        }
+        else if (response.wallet) {
+          if (response.balanceError) {
+            swal("insufficient balance!", "please try another payment method!", "warning").then(function () {
+              location.reload()
+            })
+          } else {
+            swal("Order placed!", "Amount debited from wallet!", "success").then(function () {
               location.href = '/order-details';
             });
           }
-          else if (response.wallet) {
-            if (response.balanceError) {
-              swal("insufficient balance!", "please try another payment method!", "warning").then(function () {
-                location.reload()
-              })
-            } else {
-              swal("Order placed!", "Amount debited from wallet!", "success").then(function () {
-                location.href = '/order-details';
-              });
-            }
-          } else if (response.razorpay) {
-            getRazorpay(response)
-          }
-          else if (!response.wallet) {
-            swal("wallet not found!", "create wallet from profile!", "warning")
-          }
-
-
-        },
-        error: function (xhr, status, error) {
-          console.log("AJAX error:", error);
+        } else if (response.razorpay) {
+          getRazorpay(response)
         }
-      });
-    }
+        else if (!response.wallet) {
+          swal("wallet not found!", "create wallet from profile!", "warning")
+        }
+
+
+      },
+      error: function (xhr, status, error) {
+        console.log("AJAX error:", error);
+      }
+    });
+  }
 
 
 
-  
+
   //coupon verify
 
   function couponVerify() {
@@ -370,7 +370,7 @@
           document.getElementById('total').innerHTML = response.updatedCartTotal.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
           document.getElementById('couponDiscounTotal').value = response.updatedCartTotal
           document.getElementById('hiddenCoupon').value = response.couponCode
-          document.getElementById('couponOffer').innerHTML= response.couponDiscount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
+          document.getElementById('couponOffer').innerHTML = response.couponDiscount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
 
 
 
