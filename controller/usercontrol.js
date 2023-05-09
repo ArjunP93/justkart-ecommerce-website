@@ -164,6 +164,7 @@ module.exports = {
   },
 
   userlogout: (req, res) => {
+    
     loginheader = false;
     loginStatus = false;
     req.session.user = null;
@@ -173,17 +174,24 @@ module.exports = {
   },
 
   productPage: (req, res) => {
+    
     userhelpers.viewProductDetails(req.params.id).then(async (response) => {
       if (req.session.user) {
         let userId = req.session.user._id;
         let count = await userhelpers.cart_wishlist_count(userId);
+        response.userId = userId
 
+       
+
+        
         res.render("user/shop-product", {
           response,
           cartCount: count.cartCount,
           wishCount: count.wishCount,
+          
         });
       } else {
+      
         res.render("user/shop-product", { response });
       }
     });
@@ -333,7 +341,7 @@ module.exports = {
     console.log("adde == to wishlist");
     const userId = req.session.user._id;
     const proId = req.query.proId;
-    userhelpers.addTowishlistHelp(userId, proId).then((data) => {
+    userhelpers.addTowishlistHelp(userId,proId).then((data) => {
       res.json(data);
     });
   },
@@ -475,12 +483,20 @@ module.exports = {
             res.json(response);
           });
         } else if (req.body.paymentMethod === "wallet+online") {
-          let walletfund = await userhelpers.checkWalletBalance(userid);
+          let wallet = await userhelpers.checkWalletBalance(userid);
+          if(wallet){
+            await userhelpers.purchaseWithWallet(
+              userid,
+              orderId,
+              parseInt(wallet.balance),
+              parseInt(wallet.balance)
+            );
+          }else{
+
+          }
           await userhelpers.purchaseWithWallet(
             userid,
-            orderId,
-            parseInt(walletfund.balance),
-            parseInt(walletfund.balance)
+            orderId
           );
           await userhelpers
             .getRazorpay(orderId, req.body.payableBalance)

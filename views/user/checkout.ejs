@@ -370,6 +370,8 @@
           document.getElementById('total').innerHTML = response.updatedCartTotal.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
           document.getElementById('couponDiscounTotal').value = response.updatedCartTotal
           document.getElementById('hiddenCoupon').value = response.couponCode
+          document.getElementById('couponOffer').innerHTML= response.couponDiscount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
+
 
 
         } else {

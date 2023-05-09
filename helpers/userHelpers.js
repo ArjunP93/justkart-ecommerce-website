@@ -127,7 +127,7 @@ module.exports = {
         .find({ _id: id })
         .exec()
         .then((response) => {
-          console.log(response[0]);
+          
           resolve(response[0]);
         });
     });
@@ -480,12 +480,13 @@ module.exports = {
       console.log("cannot refund or update");
     }
   },
-  purchaseWithWallet: async (uId, oId, amount, walletFund) => {
+  purchaseWithWallet: async (uId, oId, amount=0, walletFund=0) => {
     try {
       let transObj = {
         _id: objectId(oId),
         type: "debit",
         amount: amount,
+
         createdAt: new Date(),
       };
       let walletBalance = parseInt(walletFund - amount);
@@ -684,9 +685,10 @@ module.exports = {
         if (couponExist) {
           if (new Date(couponExist.expiry) - new Date() > 0) {
             if (total >= couponExist.minPurchase) {
-              let discountedTotal =
-                total - total * (couponExist.discountPercentage / 100);
+              let couponDiscount =total * (couponExist.discountPercentage / 100)
+              let discountedTotal =total - couponDiscount ;
               if (discountedTotal > couponExist.maxDiscountValue) {
+                couponDiscount =couponExist.maxDiscountValue
                 updatedCartTotal = total - couponExist.maxDiscountValue;
               } else {
                 updatedCartTotal = discountedTotal;
@@ -698,10 +700,10 @@ module.exports = {
               console.log("couponused", couponUsed);
               if (couponUsed) {
                 couponValid = false;
-                resolve({ couponValid, updatedCartTotal });
+                resolve({ couponValid, updatedCartTotal, });
               } else {
                 couponValid = true;
-                resolve({ couponValid, couponCode, updatedCartTotal });
+                resolve({ couponValid, couponCode, updatedCartTotal,couponDiscount });
               }
             } else {
               resolve({
