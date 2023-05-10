@@ -51,7 +51,7 @@
                                     </h2>
                                     <div class="product-detail-rating">
                                         <div class="pro-details-brand">
-                                            <span> Brands: <a href="#">Bootstrap</a></span>
+                                            <span> Brands: <a href="#"></a></span>
                                         </div>
                                         <div class="product-rate-cover text-end">
                                             <div class="product-rate d-inline-block">
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
-                                            <ins><span class="text-brand">₹<%=response.Price%></span></ins>
+                                            <ins><span class="text-brand"><%=response.Price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })%></span></ins>
                                             <!-- <ins><span class="old-price font-md ml-15">$200.00</span></ins>
                                                 <span class="save-price  font-md color3 ml-15">25% Off</span> -->
                                         </div>

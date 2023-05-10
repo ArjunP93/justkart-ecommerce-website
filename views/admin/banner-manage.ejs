@@ -44,13 +44,13 @@
                                         <input type="text" name="link" class="form-control" />
 
                                         <label for="">Image</label>
-                                        <input type="file" name="bannerImg" class="form-control" required />
+                                        <input type="file" name="bannerImg" class="form-control" required accept="jpeg,jpg,png" />
 
                                         <label for="">Image</label>
-                                        <input type="file" name="bannerImg" class="form-control" required />
+                                        <input type="file" name="bannerImg" class="form-control" required accept="jpeg,jpg,png"/>
 
                                         <label for="">Image</label>
-                                        <input type="file" name="bannerImg" class="form-control" required />
+                                        <input type="file" name="bannerImg" class="form-control" required accept="jpeg,jpg,png"/>
 
                                         <button type="submit" class="btn btn-success mt-4">Submit</button>
                                     </form>
@@ -92,27 +92,27 @@
                                     <form id="requierdBannerIdForm" enctype="multipart/form-data">
 
                                         <label for="">Title</label>
-                                        <input type="text" name="title" class="form-control" id="title" value="" />
+                                        <input type="text" name="title" class="form-control" id="title" value="" required />
 
                                         <input type="text" id="requiredBannerId" name="id" value=""
-                                            style="display: none;">
+                                            style="display: none;" >
 
                                         <label for="">Description</label>
                                         <input type="text" name="description" class="form-control" id="description"
-                                            value="" />
+                                            value="" required/>
 
                                         <label for="">Link</label>
                                         <input type="text" name="link" class="form-control" id="link" value="" />
 
                                         <label for="">Image 1</label>
                                         <!-- <img  alt="" style="width:80px;height:auto" id="bannerImgView1" class="mt-3 mb-3"> -->
-                                        <input type="file" name="bannerEditImg1" class="form-control" id="bannerImg1" />
+                                        <input type="file" name="bannerEditImg1" class="form-control" id="bannerImg1" accept=".jpeg,.jpg,.png" />
 
                                         <label for="">Image 2</label>
-                                        <input type="file" name="bannerEditImg2" class="form-control" id="bannerImg2" />
+                                        <input type="file" name="bannerEditImg2" class="form-control" id="bannerImg2" accept=".jpeg,.jpg,.png" />
 
                                         <label for="">Image 3</label>
-                                        <input type="file" name="bannerEditImg3" class="form-control" id="bannerImg3" />
+                                        <input type="file" name="bannerEditImg3" class="form-control" id="bannerImg3" accept=".jpeg,.jpg,.png" />
 
                                         <button onclick="editBanner()" class="btn btn-primary">Update</button>
                                     </form>
