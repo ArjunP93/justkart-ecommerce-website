@@ -1,5 +1,3 @@
-
-
 const userhelpers = require("../helpers/userHelpers");
 const { category, user } = require("../model/connection");
 const objectId = require("mongodb").ObjectId;
@@ -123,7 +121,7 @@ module.exports = {
     const orderListCount = count;
 
     userhelpers.listProductShop(page, perPage).then((response) => {
-     productHelpers.findAllcategories().then(async (cat) => {
+      productHelpers.findAllcategories().then(async (cat) => {
         if (req.session.userIn) {
           let userId = req.session.user._id;
           let count = await userhelpers.cart_wishlist_count(userId);
@@ -167,7 +165,6 @@ module.exports = {
   },
 
   userlogout: (req, res) => {
-    
     loginheader = false;
     loginStatus = false;
     req.session.user = null;
@@ -177,21 +174,18 @@ module.exports = {
   },
 
   productPage: (req, res) => {
-    
     userhelpers.viewProductDetails(req.params.id).then(async (response) => {
       if (req.session.user) {
         let userId = req.session.user._id;
         let count = await userhelpers.cart_wishlist_count(userId);
-        response.userId = userId
+        response.userId = userId;
 
         res.render("user/shop-product", {
           response,
           cartCount: count.cartCount,
           wishCount: count.wishCount,
-          
         });
       } else {
-      
         res.render("user/shop-product", { response });
       }
     });
@@ -261,13 +255,11 @@ module.exports = {
       });
   },
 
- 
-
   addToWishlist: async (req, res) => {
     console.log("adde == to wishlist");
     const userId = req.session.user._id;
     const proId = req.query.proId;
-    userhelpers.addTowishlistHelp(userId,proId).then((data) => {
+    userhelpers.addTowishlistHelp(userId, proId).then((data) => {
       res.json(data);
     });
   },
@@ -294,7 +286,7 @@ module.exports = {
     let subt = parseInt(qty * price);
 
     console.log("log subtotal", subt);
-    
+
     cartHelpers
       .addToCart_post(productId, userId, qty, subt)
       .then((response) => {
@@ -411,20 +403,16 @@ module.exports = {
           });
         } else if (req.body.paymentMethod === "wallet+online") {
           let wallet = await userhelpers.checkWalletBalance(userid);
-          if(wallet){
+          if (wallet) {
             await userhelpers.purchaseWithWallet(
               userid,
               orderId,
               parseInt(wallet.balance),
               parseInt(wallet.balance)
             );
-          }else{
-
+          } else {
           }
-          await userhelpers.purchaseWithWallet(
-            userid,
-            orderId
-          );
+          await userhelpers.purchaseWithWallet(userid, orderId);
           await userhelpers
             .getRazorpay(orderId, req.body.payableBalance)
             .then((response) => {
@@ -505,8 +493,6 @@ module.exports = {
     });
   },
 
-  
-
   get_Account: async (req, res) => {
     let userId = req.session.user._id;
     // pageination
@@ -547,7 +533,6 @@ module.exports = {
   post_addAddress: (req, res) => {
     let userId = req.session.user._id;
 
-  
     userhelpers.addAdress(userId, req.body).then((response) => {
       res.redirect("/account");
     });
@@ -566,10 +551,8 @@ module.exports = {
     let userId = req.session.user._id;
     let couponCode = req.body.code;
     let total = req.body.total;
-    
-    userhelpers.verifyCouponCode(userId, total, couponCode).then((response) => {
-     
 
+    userhelpers.verifyCouponCode(userId, total, couponCode).then((response) => {
       res.json(response);
     });
   },

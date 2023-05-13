@@ -16,7 +16,7 @@ module.exports = {
       res.render("admin/banner-manage", {
         layout: "adminLayout",
         viewBanners,
-        adminStatus:true,
+        adminStatus: true,
         pages: Math.ceil(orderListCount / perPage),
       });
     });

@@ -1,15 +1,8 @@
-
 const orderSchema = require("../model/orders");
 const objectId = require("mongodb").ObjectId;
 
-
-
-
-
-
-module.exports={
-
-all_orders: async (page, perPage) => {
+module.exports = {
+  all_orders: async (page, perPage) => {
     try {
       let allOrderList = await orderSchema.order
         .find()
@@ -43,5 +36,5 @@ all_orders: async (page, perPage) => {
     } catch (error) {
       console.log("cannot update status");
     }
-  }
-}
+  },
+};

@@ -178,7 +178,6 @@ module.exports = {
     return countsForHeader;
   },
 
- 
   getAddress: async (uId) => {
     try {
       let user_address = await db.address.findOne({ userid: uId });
@@ -211,7 +210,6 @@ module.exports = {
     }
   },
 
-  
   refundToWallet: (uId, refund, oId) => {
     try {
       let transactionsObj = {
@@ -328,8 +326,6 @@ module.exports = {
       return Promise.reject(error);
     }
   },
-
- 
 
   getRazorpay: (orderId, total) => {
     try {

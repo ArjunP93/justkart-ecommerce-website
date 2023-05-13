@@ -17,7 +17,7 @@ module.exports = {
 
     res.render("admin/admin-orders-page", {
       layout: "adminLayout",
-      adminStatus:true,
+      adminStatus: true,
       allOrders,
       pages: Math.ceil(orderListCount / perPage),
     });
@@ -28,7 +28,7 @@ module.exports = {
     let orderdetail = await orderHelpers.expandAdminOrders(orderId);
     res.render("admin/admin-order-detail", {
       layout: "adminLayout",
-      adminStatus:true,
+      adminStatus: true,
       orderdetail,
     });
   },

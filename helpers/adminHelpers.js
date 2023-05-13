@@ -88,12 +88,15 @@ module.exports = {
         return date.toLocaleString("default", { month: "long" });
       }
 
-      response.ordercount = ordercount==null ? 0 : ordercount;
-      response.productsCount = productsCount==null ? 0 : productsCount;
-      response.catagoryCount = catagoryCount==null ? 0 : catagoryCount;
-      response.revenue = !revenue[0]?.totalRevenue ? 0 : revenue[0].totalRevenue;
-      response.dataForGraph_Sales = dataForGraph_Sales==null ? 0 : dataForGraph_Sales;
-      response.paymentcounts = paymentcounts==null ? 0 : paymentcounts;
+      response.ordercount = ordercount == null ? 0 : ordercount;
+      response.productsCount = productsCount == null ? 0 : productsCount;
+      response.catagoryCount = catagoryCount == null ? 0 : catagoryCount;
+      response.revenue = !revenue[0]?.totalRevenue
+        ? 0
+        : revenue[0].totalRevenue;
+      response.dataForGraph_Sales =
+        dataForGraph_Sales == null ? 0 : dataForGraph_Sales;
+      response.paymentcounts = paymentcounts == null ? 0 : paymentcounts;
       response.monthlyEarnings = monthlyEarnings?.pop();
 
       return response;
@@ -149,11 +152,7 @@ module.exports = {
 
   //for finding all catagories available and making them to passable object
 
-
   //order helpers
-  
-
-
 
   salesReport: async (start, end) => {
     try {

@@ -3,7 +3,6 @@ const couponSchema = require("../model/coupon");
 
 const couponHelpers = require("../helpers/couponHelpers");
 
-
 let adminStatus;
 
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
     let couponslist = await couponHelpers.getAllCoupons(page, perPage);
     res.render("admin/add-view-coupon", {
       layout: "adminLayout",
-      adminStatus:true,
+      adminStatus: true,
       couponslist,
       pages: Math.ceil(couponListCount / perPage),
     });

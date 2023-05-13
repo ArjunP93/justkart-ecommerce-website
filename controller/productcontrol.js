@@ -11,7 +11,7 @@ module.exports = {
     productHelpers.findAllcategories().then((availCategory) => {
       res.render("admin/add-product", {
         layout: "adminLayout",
-        adminStatus:true,
+        adminStatus: true,
         availCategory,
       });
     });
@@ -40,7 +40,7 @@ module.exports = {
         layout: "adminLayout",
         availCategory,
         response,
-        adminStatus:true,
+        adminStatus: true,
         pages: Math.ceil(orderListCount / perPage),
       });
     });
@@ -51,7 +51,7 @@ module.exports = {
       res.render("admin/view-product-Detail", {
         layout: "adminLayout",
         response,
-        adminStatus:true,
+        adminStatus: true,
       });
     });
   },
@@ -64,7 +64,7 @@ module.exports = {
       res.render("admin/add-category", {
         layout: "adminLayout",
         viewCategory,
-        adminStatus:true,
+        adminStatus: true,
         categorydelete,
       });
       req.session.catexist = true;
@@ -109,7 +109,7 @@ module.exports = {
       res.render("admin/edit-category", {
         layout: "adminLayout",
         data,
-        adminStatus:true,
+        adminStatus: true,
       });
     });
   },
@@ -145,7 +145,7 @@ module.exports = {
           layout: "adminLayout",
           editproduct,
           procategory,
-          adminStatus:true,
+          adminStatus: true,
         });
       });
     });

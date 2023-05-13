@@ -1,15 +1,9 @@
-
 const objectId = require("mongodb").ObjectId;
 const couponSchema = require("../model/coupon");
 const voucher = require("voucher-code-generator");
 
-
-
-
-
-module.exports={
-
-getAllCoupons: async () => {
+module.exports = {
+  getAllCoupons: async () => {
     try {
       let getCoupons = await couponSchema.coupon.find();
       return getCoupons;
@@ -73,6 +67,5 @@ getAllCoupons: async () => {
     } catch (error) {
       console.log("cannot delete coupon");
     }
-  }
-
-}
+  },
+};
