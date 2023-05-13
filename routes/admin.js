@@ -8,7 +8,11 @@ const multer = require("multer");
 const photoload = require("../multer/multer");
 
 const authentication = require("../middleware/middlewares");
-const admincontrol = require("../controller/admincontrol");
+
+const couponcontrol = require("../controller/couponcontrol");
+const bannercontrol = require("../controller/bannercontrol");
+const ordercontrol = require("../controller/ordercontrol");
+const productcontrol = require("../controller/productcontrol");
 
 router.get("/", authentication.adminAuth, adminControl.showDashboard);
 
@@ -36,97 +40,97 @@ router.get(
 router
   .route("/add-product")
   .all(authentication.adminAuth)
-  .get(adminControl.addProducts)
-  .post(photoload.uploads, adminControl.postProducts);
+  .get(productcontrol.addProducts)
+  .post(photoload.uploads, productcontrol.postProducts);
 
 router.get(
   "/view-product",
   authentication.adminAuth,
-  adminControl.viewProducts
+  productcontrol.viewProducts
 );
-router.get("/view-product-Details/:id", admincontrol.ViewProductDetails);
+router.get("/view-product-Details/:id", productcontrol.ViewProductDetails);
 
 router
   .route("/edit-product/:id")
   .all(authentication.adminAuth)
-  .get(adminControl.get_EditProduct)
+  .get(productcontrol.get_EditProduct)
 
-  .post(photoload.editeduploads, adminControl.post_EditProduct);
+  .post(photoload.editeduploads, productcontrol.post_EditProduct);
 
-router.get("/add-category", authentication.adminAuth, adminControl.getCategory);
+router.get("/add-category", authentication.adminAuth, productcontrol.getCategory);
 
-router.post("/add-category", adminControl.postCategory);
+router.post("/add-category", productcontrol.postCategory);
 
 router.get(
   "/edit-category/:id",
   authentication.adminAuth,
-  admincontrol.get_EditCategory
+  productcontrol.get_EditCategory
 );
 router.post(
   "/edit-category",
   authentication.adminAuth,
-  admincontrol.post_EditCategory
+  productcontrol.post_EditCategory
 );
 
 router.delete(
   "/delete-product",
   authentication.adminAuth,
-  adminControl.deleteTheProduct
+  productcontrol.deleteTheProduct
 );
 
 router.delete(
   "/delete-category",
   authentication.adminAuth,
-  adminControl.deleteCategory
+  productcontrol.deleteCategory
 );
 
 router.get(
   "/all-orders",
   authentication.adminAuth,
-  admincontrol.get_all_orders
+  ordercontrol.get_all_orders
 );
 
-router.get("/view-admin-order-expand/:id", admincontrol.get_adminOrdersExpand);
+router.get("/view-admin-order-expand/:id", ordercontrol.get_adminOrdersExpand);
 
 router.post(
   "/update-status",
   authentication.adminAuth,
-  adminControl.updateProductStatus
+  ordercontrol.updateProductStatus
 );
 
 router
   .route("/add-banner")
   .all(authentication.adminAuth)
-  .get(adminControl.get_bannerAdd)
-  .post(photoload.bannerAdd, admincontrol.post_bannerAdd);
+  .get(bannercontrol.get_bannerAdd)
+  .post(photoload.bannerAdd, bannercontrol.post_bannerAdd);
 
-router.get("/get-banner", authentication.adminAuth, adminControl.find_banner);
+router.get("/get-banner", authentication.adminAuth, bannercontrol.find_banner);
 router.put(
   "/edit-banner",
   photoload.bannerEdit,
   authentication.adminAuth,
-  adminControl.edit_banner
+  bannercontrol.edit_banner
 );
-router.put("/list-banner", authentication.adminAuth, adminControl.list_banner);
+router.put("/list-banner", authentication.adminAuth, bannercontrol.list_banner);
 router.put(
   "/unlist-banner",
   authentication.adminAuth,
-  adminControl.unList_banner
+  bannercontrol.unList_banner
 );
 router.delete(
   "/delete-banner",
   authentication.adminAuth,
-  adminControl.delete_banner
+  bannercontrol.delete_banner
 );
 
-router.get("/view-coupons", authentication.adminAuth, adminControl.view_coupon);
-router.post("/add-coupon", authentication.adminAuth, adminControl.add_coupon);
-router.put("/edit-coupon", authentication.adminAuth, adminControl.edit_coupon);
-router.get("/get-coupon", authentication.adminAuth, adminControl.get_coupon);
+router.get("/view-coupons", authentication.adminAuth, couponcontrol.view_coupon);
+router.post("/add-coupon", authentication.adminAuth, couponcontrol.add_coupon);
+router.put("/edit-coupon", authentication.adminAuth, couponcontrol.edit_coupon);
+router.get("/get-coupon", authentication.adminAuth, couponcontrol.get_coupon);
 router.delete(
   "/delete-coupon",
   authentication.adminAuth,
-  adminControl.delete_coupon
+  couponcontrol.delete_coupon
 );
 
 //sales report

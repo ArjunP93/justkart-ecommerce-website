@@ -2,6 +2,9 @@ var express = require("express");
 var router = express.Router();
 const controller = require("../controller/usercontrol");
 const authentication = require("../middleware/middlewares");
+const cartcontrol = require("../controller/cartcontrol");
+
+const userordercontrol = require("../controller/userordercontrol");
 
 /* GET home page. */
 router.get("/", controller.getHome);
@@ -44,35 +47,35 @@ router.get(
   "/add-to-cart",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.ajaxAddToCart
+  cartcontrol.ajaxAddToCart
 );
 
 router.get(
   "/show-user-cart",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.ajaxViewCart
+  cartcontrol.ajaxViewCart
 );
 
 router.post(
   "/update-cart",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.ajaxUpdatecart
+  cartcontrol.ajaxUpdatecart
 );
 
 router.delete(
   "/delete-product-cart",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.deleteInCart
+  cartcontrol.deleteInCart
 );
 
 router.get(
   "/cart-total",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.ajaxCartTotal
+  cartcontrol.ajaxCartTotal
 );
 
 router.get(
@@ -130,26 +133,26 @@ router.get(
   "/order-details",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.get_orderDetails
+  userordercontrol.get_orderDetails
 );
 
 router.post(
   "/cancel-order",
   authentication.userAuth,
-  controller.post_cancel_order
+  userordercontrol.post_cancel_order
 );
 
 router.post(
   "/return-products",
   authentication.userAuth,
-  controller.post_return_order
+  userordercontrol.post_return_order
 );
 
 router.get(
   "/view-user-order-expand/:id",
   authentication.userAuth,
   authentication.blockuserStatus,
-  controller.get_userOrdersExpand
+  userordercontrol.get_userOrdersExpand
 );
 
 router.post(

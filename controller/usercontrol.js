@@ -1,11 +1,14 @@
-// const { delete_banner } = require("../helpers/adminhelpers");
-const adminhelpers = require("../helpers/adminHelpers");
+
+
 const userhelpers = require("../helpers/userHelpers");
 const { category, user } = require("../model/connection");
 const objectId = require("mongodb").ObjectId;
 const orderSchema = require("../model/orders");
 const db = require("../model/connection");
 const bannerSchema = require("../model/banner");
+const productHelpers = require("../helpers/productHelpers");
+const userorderHelpers = require("../helpers/userorderHelpers");
+const cartHelpers = require("../helpers/cartHelpers");
 
 var loginheader, loginStatus;
 
@@ -56,7 +59,7 @@ module.exports = {
       .limit(perPage);
     console.log("produt data", pData);
 
-    adminhelpers.findAllcategories().then(async (cat) => {
+    productHelpers.findAllcategories().then(async (cat) => {
       if (req.session.userIn) {
         let userId = req.session.user._id;
         let count = await userhelpers.cart_wishlist_count(userId);
@@ -120,7 +123,7 @@ module.exports = {
     const orderListCount = count;
 
     userhelpers.listProductShop(page, perPage).then((response) => {
-      adminhelpers.findAllcategories().then(async (cat) => {
+     productHelpers.findAllcategories().then(async (cat) => {
         if (req.session.userIn) {
           let userId = req.session.user._id;
           let count = await userhelpers.cart_wishlist_count(userId);
@@ -181,9 +184,6 @@ module.exports = {
         let count = await userhelpers.cart_wishlist_count(userId);
         response.userId = userId
 
-       
-
-        
         res.render("user/shop-product", {
           response,
           cartCount: count.cartCount,
@@ -197,7 +197,7 @@ module.exports = {
     });
   },
   categoryFiltering: async (req, res) => {
-    let userId = req.session.user._id;
+    let userId = req.session?.user?._id;
     let categoryName = await userhelpers.findCategoryName(req.params.id);
     console.log("catname", categoryName);
 
@@ -211,7 +211,7 @@ module.exports = {
 
     const orderListCount = count;
 
-    let cat = await adminhelpers.findAllcategories();
+    let cat = await productHelpers.findAllcategories();
 
     await userhelpers
       .findAllProducts(categoryName, page, perPage)
@@ -261,81 +261,7 @@ module.exports = {
       });
   },
 
-  ajaxAddToCart: (req, res) => {
-    let productId = req.query.proId;
-    let userId = req.session.user._id;
-    let temp = req.query.quantity;
-    let qty = parseInt(temp);
-    let subt = parseInt(req.query.subTotal);
-
-    console.log("hello:", productId, userId, qty);
-    userhelpers
-      .addToCart_post(productId, userId, qty, subt)
-      .then((response) => {
-        res.json(true);
-      });
-  },
-
-  ajaxViewCart: async (req, res) => {
-    let userId = req.session.user._id;
-    let user = req.session.user;
-
-    let totals = await userhelpers.cartTotal(userId);
-    console.log(totals);
-    let total;
-    if (totals.length != 0) {
-      total = totals[0].total;
-    } else {
-      total = 0;
-    }
-    console.log("inside viewcart");
-    userhelpers.viewUser_cart(userId).then(async (response) => {
-      console.log("view:", response);
-      let count = response.count;
-
-      let countHeader = await userhelpers.cart_wishlist_count(userId);
-
-      res.render("user/cart", {
-        response,
-        count,
-        userId,
-        cartCount: countHeader.cartCount,
-        wishCount: countHeader.wishCount,
-        loginheader: true,
-        total,
-      });
-    });
-  },
-
-  ajaxUpdatecart: async (req, res) => {
-    let productId = req.body.proId;
-    let userId = req.session.user._id;
-    let qty = parseInt(req.body.quantity);
-    let subTotal = parseInt(req.body.subtotal);
-    let count = parseInt(req.body.count);
-
-    console.log(count, qty);
-    const updatedQty = qty + count;
-    if (updatedQty == 0) {
-      await userhelpers.deleteProInCart(productId, userId);
-      res.json(true);
-    } else {
-      await userhelpers.updateCart(productId, userId, updatedQty, subTotal);
-      res.json(true);
-    }
-  },
-  ajaxCartTotal: async (req, res) => {
-    let total = await userhelpers.cartTotal(req.query.userId);
-
-    res.json(total);
-  },
-
-  deleteInCart: async (req, res) => {
-    let userId = req.session.user._id;
-    console.log("kpdelete", req.body.proId);
-    await userhelpers.deleteProInCart(req.body.proId, userId);
-    res.json(true);
-  },
+ 
 
   addToWishlist: async (req, res) => {
     console.log("adde == to wishlist");
@@ -368,7 +294,8 @@ module.exports = {
     let subt = parseInt(qty * price);
 
     console.log("log subtotal", subt);
-    userhelpers
+    
+    cartHelpers
       .addToCart_post(productId, userId, qty, subt)
       .then((response) => {
         userhelpers.deleteFromWishlist(productId, userId).then((result) => {
@@ -389,8 +316,8 @@ module.exports = {
 
     let addressFetch = await userhelpers.getAddress(userid);
     let address = addressFetch ? addressFetch : { Address: [] };
-    let cart = await userhelpers.viewUser_cart(userid);
-    let total_checkout = await userhelpers.cartTotal(userid);
+    let cart = await cartHelpers.viewUser_cart(userid);
+    let total_checkout = await cartHelpers.cartTotal(userid);
     let count = await userhelpers.cart_wishlist_count(userid);
 
     res.render("user/checkout", {
@@ -406,7 +333,7 @@ module.exports = {
     let userid = req.session.user._id;
     let userInfo = await userhelpers.userDetails(userid);
 
-    let cart = await userhelpers.viewCart_aggregate(userid);
+    let cart = await cartHelpers.viewCart_aggregate(userid);
     req.session.latestCoupon = req.body.couponCode;
 
     //coupon code null check
@@ -422,7 +349,7 @@ module.exports = {
 
     // console.log('req.body.totslsl',req.body.totalWithCoupon);
     if (req.body.couponCode == "N/A") {
-      total_Aggregate = await userhelpers.cartTotal(userid);
+      total_Aggregate = await cartHelpers.cartTotal(userid);
       total_checkout = total_Aggregate[0].total;
     } else {
       total_checkout = parseInt(req.body.totalWithCoupon);
@@ -474,7 +401,7 @@ module.exports = {
 
         if (req.body.paymentMethod === "COD") {
           userhelpers.couponAddtoUser(couponCode, userid);
-          userhelpers.emptyCart(userid);
+          cartHelpers.emptyCart(userid);
           response.COD = true;
           res.json(response);
         } else if (req.body.paymentMethod === "online") {
@@ -531,7 +458,7 @@ module.exports = {
                 .then(async () => {
                   await userhelpers.updateOrderPayment(orderId);
                   await userhelpers.couponAddtoUser(couponCode, userid);
-                  await userhelpers.emptyCart(userid);
+                  await cartHelpers.emptyCart(userid);
                   response.wallet = true;
                   response.balanceError = false;
                   response.walletbalance = walletbalance;
@@ -572,67 +499,13 @@ module.exports = {
       if (success.status) {
         await userhelpers.updateOrderPayment(orderId);
         await userhelpers.couponAddtoUser(couponCode, userId);
-        await userhelpers.emptyCart(userId);
+        await cartHelpers.emptyCart(userId);
         res.json(true);
       }
     });
   },
 
-  get_orderDetails: (req, res) => {
-    let orderId = req.session.latestOrder;
-    let userId = req.session.user._id;
-
-    userhelpers.userOrderDetails(orderId).then(async (currentOrder) => {
-      let count = await userhelpers.cart_wishlist_count(userId);
-
-      res.render("user/orderdetail", {
-        currentOrder,
-        cartCount: count.cartCount,
-        wishCount: count.wishCount,
-        loginheader: true,
-      });
-    });
-  },
-  post_cancel_order: async (req, res) => {
-    console.log("inside function");
-    const userId = req.session.user._id;
-    let orderId = req.session.latestOrder;
-    let payment = await orderSchema.order.findOne({ _id: orderId });
-    if (
-      payment.paymentMethod == "online" ||
-      payment.paymentMethod == "wallet" ||
-      payment.paymentMethod == "wallet+online"
-    ) {
-      let refund = parseInt(payment.totalPrice);
-      await userhelpers.refundToWallet(userId, refund, orderId);
-    }
-    userhelpers.cancelOrder(orderId).then(() => {
-      res.json(true);
-    });
-  },
-  post_return_order: (req, res) => {
-    let orderId = req.body.orderId;
-    let refund = parseInt(req.body.totalAmount);
-    const userId = req.session.user._id;
-    // console.log('fghjkkkkkkkkkkkkkkkk',orderId,refund,userId);
-    userhelpers.refundToWallet(userId, refund, orderId).then(() => {
-      res.json(true);
-    });
-  },
-
-  get_userOrdersExpand: (req, res) => {
-    let orderId = req.params.id;
-    let userId = req.session.user._id;
-    userhelpers.expandUserOrders(orderId).then(async (orderView) => {
-      let countHead = await userhelpers.cart_wishlist_count(userId);
-      res.render("user/viewOrderDetail", {
-        orderView,
-        loginheader: true,
-        cartCount: countHead.cartCount,
-        wishCount: countHead.wishCount,
-      });
-    });
-  },
+  
 
   get_Account: async (req, res) => {
     let userId = req.session.user._id;
@@ -653,7 +526,7 @@ module.exports = {
       addressCount = 0;
     }
 
-    let orders = await userhelpers.fetchUserOrders(userId, page, perPage);
+    let orders = await userorderHelpers.fetchUserOrders(userId, page, perPage);
 
     let walletResponse = await userhelpers.checkWalletBalance(userId);
 
@@ -674,7 +547,7 @@ module.exports = {
   post_addAddress: (req, res) => {
     let userId = req.session.user._id;
 
-    console.log("useridddddd", userId);
+  
     userhelpers.addAdress(userId, req.body).then((response) => {
       res.redirect("/account");
     });
@@ -693,7 +566,7 @@ module.exports = {
     let userId = req.session.user._id;
     let couponCode = req.body.code;
     let total = req.body.total;
-    console.log("total", total);
+    
     userhelpers.verifyCouponCode(userId, total, couponCode).then((response) => {
      
 
