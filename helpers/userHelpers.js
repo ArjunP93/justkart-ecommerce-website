@@ -178,6 +178,43 @@ module.exports = {
     return countsForHeader;
   },
 
+  addAdress: (uId, data) => {
+    let addressobj = {
+      firstName: data.fname,
+      lastName: data.lname,
+      street: data.street,
+      building: data.building,
+      city: data.city,
+      state: data.state,
+      pincode: data.pincode,
+      mobile: data.mobile,
+      email: data.email,
+    };
+
+    console.log(addressobj, "addressobj");
+    return new Promise(async (resolve, reject) => {
+      let addressDetails = await db.address.findOne({ userid: uId });
+
+      if (addressDetails == null) {
+        const addressItem = new db.address({
+          userid: objectId(uId),
+          Address: addressobj,
+        });
+
+        await addressItem.save().then(() => {
+          let message = "address added";
+          resolve(message);
+        });
+      } else {
+        await db.address.updateOne(
+          { userId: objectId(uId) },
+          { $push: { Address: addressobj } }
+        );
+        resolve();
+      }
+    });
+  },
+
   getAddress: async (uId) => {
     try {
       let user_address = await db.address.findOne({ userid: uId });
