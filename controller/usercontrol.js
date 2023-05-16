@@ -324,6 +324,7 @@ module.exports = {
   post_checkout: async (req, res) => {
     let userid = req.session.user._id;
     let userInfo = await userhelpers.userDetails(userid);
+    console.log('id in checkout',userInfo);
 
     let cart = await cartHelpers.viewCart_aggregate(userid);
     req.session.latestCoupon = req.body.couponCode;

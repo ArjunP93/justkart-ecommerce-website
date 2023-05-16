@@ -240,7 +240,7 @@ module.exports = {
 
   userDetails: async (uId) => {
     try {
-      let getuser = await db.user.findOne({ userid: uId });
+      let getuser = await db.user.findOne({ _id: objectId(uId) });
       return getuser;
     } catch (error) {
       console.log("didnt get the userdetails");
