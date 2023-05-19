@@ -18,7 +18,7 @@ module.exports = {
     let newlyAdded = await db.products.find().sort({ CreatedAt: -1 }).limit(4);
 
     if (loginStatus) {
-      let userId = req.session.user._id;
+      let userId = req?.session?.user?._id;
       let count = await userhelpers.cart_wishlist_count(userId);
 
       res.render("user/userhome", {
@@ -33,6 +33,9 @@ module.exports = {
         loginheader: false,
         bannerresponse,
         newlyAdded,
+        cartCount:0,
+        wishCount:0
+
       });
     }
   },
